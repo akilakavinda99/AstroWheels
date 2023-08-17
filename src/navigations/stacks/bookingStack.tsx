@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../../activities/login/loginScreen';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {navConfig} from '../navigationConfig';
+import loginScreen from '../../activities/login/loginScreen';
 
 const BookingStackNav = createNativeStackNavigator();
 

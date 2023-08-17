@@ -10,7 +10,7 @@ const RootStackNav = createNativeStackNavigator();
 const RootNavigationStack = () => {
   return (
     <NavigationContainer>
-      <RootStackNav.Navigator initialRouteName={stackNames.TABS_STACK}>
+      <RootStackNav.Navigator initialRouteName={stackNames.AUTH_STACK}>
         <RootStackNav.Screen
           name={stackNames.AUTH_STACK}
           component={AuthStack}
