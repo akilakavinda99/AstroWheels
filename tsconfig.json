@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2016", "DOM"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "strict": true,
+    "target": "ES5",
+    "jsx": "react-native",
+    
+  },
+}
