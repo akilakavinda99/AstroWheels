@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "874380849040",
+    "project_id": "astrowheels-47996",
+    "storage_bucket": "astrowheels-47996.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874380849040:android:cfea8fa1f3f4bcd3fb8d15",
+        "android_client_info": {
+          "package_name": "com.astrowheels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874380849040-0d6v7it4v6er3skdoff40pmks0nirm1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC36ArPgBMio1CZ48wb4GkNb7kGcwkYEtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874380849040-0d6v7it4v6er3skdoff40pmks0nirm1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
