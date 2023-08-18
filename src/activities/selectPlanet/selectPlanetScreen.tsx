@@ -1,8 +1,11 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import theme from '../../theme/theme';
+import {View, Text, Button} from 'react-native';
 
-const SelectPlanetScreen = () => {
+import theme from '../../theme/theme';
+import { useNavigation } from '@react-navigation/native';
+import { stackNames } from '../../constants/navigationConstants/stackNames';
+import { screenNames } from '../../constants/navigationConstants/screenNames';
+
+const SelectPlanetScreen = ({navigation}: any) => {
   return (
     <View>
       <Text
@@ -11,6 +14,7 @@ const SelectPlanetScreen = () => {
         }}>
         Screen
       </Text>
+      <Button title='submit' onPress={()=> navigation.navigate(stackNames.BOOKING_STACK,{screen:screenNames.StartExplore_Screen})}></Button>
     </View>
   );
 };
