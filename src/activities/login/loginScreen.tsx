@@ -26,7 +26,7 @@ const LoginScreen = ({onPress, navigation}: any) => {
 
   const launchFunction = async () => {
     if (userId == null) {
-      ToastAndroid.show('Please Select a User Type', ToastAndroid.SHORT);
+      ToastAndroid.show('Please use signup', ToastAndroid.SHORT);
     } else {
       const userIdStored = await storeData({
         key: asyncKeys.USER_ID,
