@@ -26,6 +26,7 @@ import {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RootNavigationStack from './src/navigations/rootNavigation';
+import {AppProvider} from './src/context/AppContext';
 
 const HelloWorldSceneAR = () => {
   const [text, setText] = useState('Initializing AR...');
@@ -137,7 +138,11 @@ const HelloWorldSceneAR = () => {
 //   }}></ViroARSceneNavigator>
 
 function App() {
-  return <RootNavigationStack />;
+  return (
+    <AppProvider>
+      <RootNavigationStack />
+    </AppProvider>
+  );
 }
 // var styles = StyleSheet.create({
 //   f1: {flex: 1},

@@ -8,20 +8,38 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {styles} from '../login/loginStyles';
-import {SafeAreaFrameContext} from 'react-native-safe-area-context';
 import theme from '../../theme/theme';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {useState, useEffect} from 'react';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
+import {documentNames} from '../../constants/firebaseConstants/documentNames';
+import {getUserData} from './loginUtils';
+import {useAppContext} from '../../context/AppContext';
 
-const LoginScreenScaning = ({navigation}: any) => {
+const LoginScreenScaning = ({navigation, route}: any) => {
   const [first, setfirst] = useState(1);
+  const [userId, setuserId] = useState(false);
+  const {user, setUser} = useAppContext();
   useEffect(() => {
     console.log('Detecting Galactic Id');
     setTimeout(() => {
       navigation.navigate(screenNames.Login_Success);
     }, 5000);
   }, []);
+
+  const fetchUserData = async userId => {
+    const user = await getUserData(userId);
+    console.log('user in fetch: ', user);
+    setUser(user);
+  };
+
+  useEffect(() => {
+    if (route.params.userId != null) {
+      fetchUserData(route.params.userId);
+    } else if (userId) {
+      fetchUserData(userId);
+    }
+  }, [route.params, userId]);
 
   return (
     <View style={AndroidSafeArea}>

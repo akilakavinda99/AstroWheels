@@ -10,7 +10,19 @@ const Tab = createBottomTabNavigator();
 // screens related to the tab bar
 const Tabs = () => {
   return (
-    <Tab.Navigator initialRouteName={screenNames.Select_Planet}>
+    <Tab.Navigator
+      initialRouteName={screenNames.Select_Planet}
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
+          position: 'absolute',
+          left: 50,
+          right: 50,
+          bottom: 20,
+          height: 100,
+        },
+      }}>
       <Tab.Screen
         name={screenNames.Select_Planet}
         component={SelectPlanetScreen}

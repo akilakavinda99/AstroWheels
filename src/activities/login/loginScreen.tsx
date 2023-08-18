@@ -12,26 +12,20 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import theme from '../../theme/theme';
 import {styles} from '../login/loginStyles';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {useState, useEffect} from 'react';
-import ModelComponent from '../../components/commonComponents/modelComponent';
 import SignUpModelComponent from '../../components/commonComponents/modelComponent';
 import {storeData} from '../../utiils/asyncStore/asyncStoreFunctions';
 import {asyncKeys} from '../../constants/asyncKeys';
 
 const LoginScreen = ({onPress, navigation}: any) => {
   const [testingModelVisible, setTestingModelVisible] = useState(false);
-  const [buttonValue, setButtonValue] = useState(null);
-  useEffect(() => {
-    console.log('button', buttonValue);
-  }, [buttonValue]);
+  const [userId, setUserId] = useState(null);
 
   const launchFunction = async () => {
-    if (buttonValue == null) {
+    if (userId == null) {
       ToastAndroid.show('Please Select a User Type', ToastAndroid.SHORT);
     } else {
       const userIdStored = await storeData({
@@ -41,6 +35,9 @@ const LoginScreen = ({onPress, navigation}: any) => {
       if (userIdStored) {
         navigation.navigate(stackNames.AUTH_STACK, {
           screen: screenNames.Login_ID_Screen,
+          params: {
+            userId,
+          },
         });
       }
     }
@@ -112,7 +109,7 @@ const LoginScreen = ({onPress, navigation}: any) => {
       </View>
       <SignUpModelComponent
         visibility={testingModelVisible}
-        buttonFunction={setButtonValue}
+        buttonFunction={setUserId}
         onBackdropPress={() => setTestingModelVisible(false)}
       />
     </View>
