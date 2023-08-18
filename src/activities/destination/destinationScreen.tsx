@@ -12,118 +12,73 @@ import {
   Alert,
   ToastAndroid,
   ImageBackground,
+  TouchableOpacity,
   Button
 } from 'react-native';
 
 import "./destinationStyle"
 import { style, styletwo } from './destinationStyle';
+import Back from '../back/backScreen';
+import { Geology } from './geologyInsights';
+import { ExplorationHub } from './explorationHub';
 
-const TestSreen2 = () => {
-  return (
-    <View >
-      <Text style={styletwo.maintitle}>Specifications</Text>
 
-      <View style={styletwo.topsection}>
-      <ImageBackground
-        style={styletwo.backgroundimg}
-        source={require('../../../assets/images/bgone.png')}
-      >
-        <Text style={styletwo.title}>Valles Marineris</Text>
-        <Text style={styletwo.para}>
-          Travelers could explore its towering cliffs, winding valleys, and
-          potentially discover evidence of Mars' ancient geological and
-          hydrological history.
-        </Text>
-        </ImageBackground>
-      </View>
-
-      <View style={styletwo.topsectiontwo}>
-      <ImageBackground
-        style={styletwo.backgroundimg}
-        source={require('../../../assets/images/bgone.png')}
-      >
-        <Text style={styletwo.title}>Curiosity Rover Landing Sit</Text>
-        <Text style={styletwo.para}>
-          Have you ever dreamed of walking in the footsteps of pioneers? You can
-          make that dream a reality by visiting the iconic landing site of the
-          Curiosity Rover on Mars
-        </Text>
-          </ImageBackground>
-      </View>
-
-      <View style={styletwo.bottomsection}>
-
-        <View style={styletwo.subsection}>
-        <ImageBackground
-        style={styletwo.backgroundimg}
-        source={require('../../../assets/images/bgone.png')}
-      >
-          <Text style={styletwo.title}>Lunar retregeg</Text>
-          <Text style={styletwo.para}>
-            Nisl posuere suspendisse enim vulputate nunc vitae
-          </Text>
-          </ImageBackground>
-        </View>
-
-        <View style={styletwo.subsection}>
-        <ImageBackground
-        style={styletwo.backgroundimg}
-        source={require('../../../assets/images/bgone.png')}
-      >
-          <Text style={styletwo.title}>Lunar retregeg</Text>
-          <Text style={styletwo.para}>
-            Nisl posuere suspendisse enim vulputate nunc vitae
-          </Text>
-          </ImageBackground>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-const TestSreen3 = ({navigation}: any) => {
-  return (
-    <View style={style.container}>
-
-{/* <Pressable style={stylestwo.button} onPress={()=> navigation.navigate(stackNames.BOOKING_STACK,{screen:screenNames.StartExplore_Screen})}>
-      <Text >Planet Destination</Text>
-    </Pressable> */}
-
-      <Text style={style.title}>Exploring Geological Diversity</Text>
-      <Text style={style.para}>Unveil the Rich Geological Tapestry of Valles Marineris</Text>
-
-      <Image
-        source={require('../../../assets/images/chart.png')} 
-        style={style.chartimg}
-      />
-
-      <Text style={style.shiptitle}>Explore Our Space ships</Text>
-
-      <Pressable style={style.button} onPress={()=> navigation.navigate(stackNames.BOOKING_STACK,{screen:screenNames.StartExplore_Screen})}>
-      <Text style={style.textbtn}>Book your Vehicle</Text>
-    </Pressable>
-      {/* <Button title='submit' onPress={()=> navigation.navigate(stackNames.BOOKING_STACK,{screen:screenNames.StartExplore_Screen})}></Button> */}
-    </View>
-  );
-};
 
 const Tab = createBottomTabNavigator();
 
 export default function Destination() {
+
+  const [activeScreen, setActiveScreen] = React.useState('Screen2');
+
+const renderActiveScreen = () => {
+  if (activeScreen === 'Screen2') {
+    return <ExplorationHub />;
+  } else if (activeScreen === 'Screen3') {
+    return <Geology/>;
+  }
+};
   return (
-    // <NavigationContainer>
-    //   <Tab.Navigator>
-    //     <Tab.Screen name="Test2" component={TestSreen2} />
-    //     <Tab.Screen name="Test4" component={TestSreen3} />
-    //   </Tab.Navigator>
-    // </NavigationContainer>
+  
+    // <ImageBackground
+    //   style={styletwo.backgroundImage}
+    //   source={require('../../../assets/images/Background.png')}>
+    // <View>
+    //   <Geology />
+    // </View>
+    //   </ImageBackground>
+
     <ImageBackground
-      style={styletwo.backgroundImage}
-      source={require('../../../assets/images/Background.png')}>
-    <View>
-      <TestSreen2 />
+    style={styletwo.backgroundImage}
+    source={require('../../../assets/images/Background.png')}
+  >
+    <View style={{ flex: 1, marginLeft:20, marginRight:20}}>
+      <Back title="Planet Destination" />
+
+      <View style={styletwo.buttonContainer}>
+        <TouchableOpacity
+          style={[
+            styletwo.screenButton,
+            activeScreen === 'Screen2' && styletwo.activeButton,
+          ]}
+          onPress={() => setActiveScreen('Screen2')}
+        >
+          <Text style={styletwo.buttonText}>Exploration Hub</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styletwo.screenButton,
+            activeScreen === 'Screen3' && styletwo.activeButton,
+          ]}
+          onPress={() => setActiveScreen('Screen3')}
+        >
+          <Text style={styletwo.buttonText}>Geology Insights</Text>
+        </TouchableOpacity>
+      </View>
+
+      {renderActiveScreen()}
     </View>
-      </ImageBackground>
+  </ImageBackground>
+  
   );
 }
 

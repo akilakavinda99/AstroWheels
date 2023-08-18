@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, Pressable, Alert, ToastAndroid,ImageBackground,I
 import { stackNames } from '../../constants/navigationConstants/stackNames';
 import { screenNames } from '../../constants/navigationConstants/screenNames';
 import { styles } from './startExploreStyles';
+import Back from '../back/backScreen';
 
 
 const StartExploreScreen = ({navigation}:any) => {
@@ -10,7 +11,9 @@ const StartExploreScreen = ({navigation}:any) => {
     style={styles.backgroundImage}
     source={require('../../../assets/images/Background.png')}>
 
-<Text>Explore your trip</Text>
+     <View style={styles.container}>
+     <Back title="Explore your trip"/>
+     </View>
 <Image
         source={require('../../../assets/images/main.png')} 
         style={styles.mainimg}

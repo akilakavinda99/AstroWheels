@@ -1,7 +1,11 @@
 import {StyleSheet} from 'react-native';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
+import theme from '../../theme/theme';
 
 export const styles = StyleSheet.create({
+  container:{
+    marginLeft: 20,
+  },
   mainbox:{
    
   },
@@ -24,8 +28,7 @@ mainimg: {
 },
   subheader:{
     fontSize: 14,
-    fontFamily: '',
-    fontWeight: 'bold',
+    fontFamily: theme.fonts.bold,
     paddingVertical: 8,
     marginTop: 80,
     bottom: 5,
@@ -33,11 +36,11 @@ mainimg: {
   },
   main:{
     fontSize: 24,
-    fontFamily: '',
-    fontWeight: 'bold',
+    fontFamily: theme.fonts.bold,
     paddingVertical: 8,
     bottom: 5,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
+    
   },
   button:{
     backgroundColor: '#40235E',
@@ -50,5 +53,6 @@ mainimg: {
   textbtn:{
     color:"#FFFFFF",
     fontSize: 20,
+    fontFamily: theme.fonts.bold,
   }
 });
