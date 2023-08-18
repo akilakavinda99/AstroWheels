@@ -11,13 +11,14 @@ const SelectPlanetScreen = () => {
   // }, [bookings]);
 
   useEffect(() => {
-    database()
+    const onValue = database()
       .ref('/spaceships/1 /seat')
       .on('value', snapshot => {
         console.log('User data CHANGED: ', snapshot.val());
         const arr = snapshot.val();
         setSeats(arr[0].seats);
       });
+    // return () => database().ref(`/spaceships/1 /seat`).off('value', onValueChange);
   }, []);
   return (
     <View>
@@ -101,7 +102,6 @@ const SelectPlanetScreen = () => {
                 }
                 return packageSeat;
               });
-
               database()
                 .ref('/spaceships/1 /')
                 .update({seat: updatedSeats})
