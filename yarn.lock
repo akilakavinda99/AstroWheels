@@ -6613,6 +6613,11 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.19.tgz"
   "version" "0.71.19"
 
+"react-native-linear-gradient@^2.8.2":
+  "integrity" "sha512-hgmCsgzd58WNcDCyPtKrvxsaoETjb/jLGxis/dmU3Aqm2u4ICIduj4ECjbil7B7pm9OnuTkmpwXu08XV2mpg8g=="
+  "resolved" "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.8.2.tgz"
+  "version" "2.8.2"
+
 "react-native-reanimated@^3.4.2":
   "integrity" "sha512-FbtG+f1PB005vDTJSv4zAnTK7nNXi+FjFgbAM5gOzIZDajfph2BFMSUstzIsN8T77+OKuugUBmcTqLnQ24EBVg=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-3.4.2.tgz"
