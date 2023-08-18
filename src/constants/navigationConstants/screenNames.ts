@@ -7,5 +7,10 @@ export const screenNames = {
   Settings_Screen: 'SettingsScreen',
   Select_Planet: 'Booking',
   Location_Screen: 'LocationScreen',
+
   Login_Success: 'LoginSuccess',
+
+  StartExplore_Screen: 'StartExploreScreen',
+  Destination_Screen: 'DestinationScreen',
+  ConfirmBooking_Screen: 'ConfirmBookingScreen',
 };

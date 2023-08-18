@@ -1,9 +1,16 @@
 import {View, Text, Button} from 'react-native';
-import database from '@react-native-firebase/database';
+
 import theme from '../../theme/theme';
+import { useNavigation } from '@react-navigation/native';
+import { stackNames } from '../../constants/navigationConstants/stackNames';
+import { screenNames } from '../../constants/navigationConstants/screenNames';
+import database from '@react-native-firebase/database';
 import {useEffect, useState} from 'react';
 
-const SelectPlanetScreen = () => {
+const SelectPlanetScreen = ({navigation}: any) => {
+
+
+// const SelectPlanetScreen = () => {
   // const [bookings, setBookings] = useState();
   const [seats, setSeats] = useState([]);
   // useEffect(() => {
@@ -28,6 +35,7 @@ const SelectPlanetScreen = () => {
         }}>
         Screensd
       </Text>
+      <Button title='submit' onPress={()=> navigation.navigate(stackNames.BOOKING_STACK,{screen:screenNames.StartExplore_Screen})}></Button>
       <Button
         title="Press ME"
         onPress={() => {
