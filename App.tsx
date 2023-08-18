@@ -6,17 +6,6 @@
  */
 
 import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
   ViroARScene,
   ViroText,
   // ViroConstants,
@@ -138,75 +127,28 @@ const HelloWorldSceneAR = () => {
   );
 };
 
-const TestSreen = ({navigation}) => {
-  return (
-    <View>
-      <Text>Test</Text>
-      <Button title="Nav" onPress={() => navigation.navigate('Tabs')} />
-    </View>
-  );
-};
+// <ViroARSceneNavigator
+//   autofocus={true}
+//   initialScene={{
+//     scene: HelloWorldSceneAR,
+//   }}
+//   style={{
+//     flex: 1,
+//   }}></ViroARSceneNavigator>
 
-const TestSreen2 = () => {
-  return (
-    <View>
-      <Text>Test1</Text>
-    </View>
-  );
-};
-
-const TestSreen3 = () => {
-  return (
-    <View>
-      <Text>Test</Text>
-    </View>
-  );
-};
-const Tab = createBottomTabNavigator();
-
-const AuthStackNav = createNativeStackNavigator();
-
-const AuthStack = () => {
-  return (
-    <AuthStackNav.Navigator>
-      <AuthStackNav.Screen name="Test" component={TestSreen} />
-    </AuthStackNav.Navigator>
-  );
-};
-
-const Tabs = () => {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Test2" component={TestSreen2} />
-      <Tab.Screen name="Test3" component={TestSreen3} />
-    </Tab.Navigator>
-  );
-};
-
-const MainStackNav = createNativeStackNavigator();
 function App() {
-  return (
-    <RootNavigationStack />
-    // <ViroARSceneNavigator
-    //   autofocus={true}
-    //   initialScene={{
-    //     scene: HelloWorldSceneAR,
-    //   }}
-    //   style={{
-    //     flex: 1,
-    //   }}></ViroARSceneNavigator>
-  );
+  return <RootNavigationStack />;
 }
-var styles = StyleSheet.create({
-  f1: {flex: 1},
-  helloWorldTextStyle: {
-    // fontFamily: ,
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
-  },
-});
+// var styles = StyleSheet.create({
+//   f1: {flex: 1},
+//   helloWorldTextStyle: {
+//     // fontFamily: ,
+//     fontSize: 10,
+//     fontWeight: '700',
+//     color: '#ffffff',
+//     textAlignVertical: 'center',
+//     textAlign: 'center',
+//   },
+// });
 
 export default App;
