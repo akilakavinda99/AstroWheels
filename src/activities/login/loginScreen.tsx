@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   StatusBar,
   Text,
+  ToastAndroid,
   TouchableHighlight,
   TouchableOpacity,
   View,
@@ -16,11 +17,34 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import ModelComponent from '../../components/commonComponents/modelComponent';
+import SignUpModelComponent from '../../components/commonComponents/modelComponent';
+import {storeData} from '../../utiils/asyncStore/asyncStoreFunctions';
+import {asyncKeys} from '../../constants/asyncKeys';
 
 const LoginScreen = ({onPress, navigation}: any) => {
   const [testingModelVisible, setTestingModelVisible] = useState(false);
+  const [buttonValue, setButtonValue] = useState(null);
+  useEffect(() => {
+    console.log('button', buttonValue);
+  }, [buttonValue]);
+
+  const launchFunction = async () => {
+    if (buttonValue == null) {
+      ToastAndroid.show('Please Select a User Type', ToastAndroid.SHORT);
+    } else {
+      const userIdStored = await storeData({
+        key: asyncKeys.USER_ID,
+        value: '1',
+      });
+      if (userIdStored) {
+        navigation.navigate(stackNames.AUTH_STACK, {
+          screen: screenNames.Login_ID_Screen,
+        });
+      }
+    }
+  };
 
   return (
     <View style={AndroidSafeArea}>
@@ -58,41 +82,37 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   style={styles.buttonSection}
                   activeOpacity={0.9}
                   underlayColor={theme.colors.primary.primary600}
-                  onPress={() =>
-                    navigation.navigate(stackNames.AUTH_STACK, {
-                      screen: screenNames.Login_ID_Screen,
-                    })
-                  }>
+                  onPress={launchFunction}>
                   <Text style={styles.launchButton}>Tap to Launch</Text>
                 </TouchableHighlight>
               </LinearGradient>
             </View>
 
             <View style={styles.signupSection}>
-              <Text style={styles.signupText}>
-                You don't have account?
-                <TouchableOpacity
-                  onPress={() => {
-                    console.log('Signup Pressed');
-                    setTestingModelVisible(true);
+              <Text style={styles.signupText}>You don't have account?</Text>
+
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Signup Pressed');
+                  setTestingModelVisible(true);
+                }}>
+                <Text
+                  style={{
+                    color: theme.colors.primary.primary200,
+                    fontWeight: '500',
                   }}>
-                  <Text
-                    style={{
-                      color: theme.colors.primary.primary200,
-                      fontWeight: '500',
-                    }}>
-                    Signup
-                  </Text>
-                </TouchableOpacity>
-              </Text>
+                  Signup
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>
 
         {/* <LoginScreenSvg/> */}
       </View>
-      <ModelComponent
-        visibility={true}
+      <SignUpModelComponent
+        visibility={testingModelVisible}
+        buttonFunction={setButtonValue}
         onBackdropPress={() => setTestingModelVisible(false)}
       />
     </View>
