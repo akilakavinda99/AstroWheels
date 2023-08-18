@@ -22,14 +22,13 @@ const AuthStack = () => {
         options={navConfig}
       />
       <AuthStackNav.Screen
-        name="LoginSuccess"
+        name={screenNames.Login_Success}
         component={LoginScreenSuccess}
         options={{
           headerShown: false,
         }}
       />
     </AuthStackNav.Navigator>
-    
   );
 };
 

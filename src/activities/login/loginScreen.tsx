@@ -16,8 +16,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
+import {useState} from 'react';
+import ModelComponent from '../../components/commonComponents/modelComponent';
 
 const LoginScreen = ({onPress, navigation}: any) => {
+  const [testingModelVisible, setTestingModelVisible] = useState(false);
+
   return (
     <View style={AndroidSafeArea}>
       <StatusBar translucent backgroundColor="transparent" />
@@ -67,14 +71,19 @@ const LoginScreen = ({onPress, navigation}: any) => {
             <View style={styles.signupSection}>
               <Text style={styles.signupText}>
                 You don't have account?
-                <Text
-                  style={{
-                    color: theme.colors.primary.primary200,
-                    fontWeight: '500',
+                <TouchableOpacity
+                  onPress={() => {
+                    console.log('Signup Pressed');
+                    setTestingModelVisible(true);
                   }}>
-                  {' '}
-                  Signup
-                </Text>
+                  <Text
+                    style={{
+                      color: theme.colors.primary.primary200,
+                      fontWeight: '500',
+                    }}>
+                    Signup
+                  </Text>
+                </TouchableOpacity>
               </Text>
             </View>
           </View>
@@ -82,6 +91,10 @@ const LoginScreen = ({onPress, navigation}: any) => {
 
         {/* <LoginScreenSvg/> */}
       </View>
+      <ModelComponent
+        visibility={true}
+        onBackdropPress={() => setTestingModelVisible(false)}
+      />
     </View>
   );
 };
