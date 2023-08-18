@@ -5,7 +5,7 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 const ModelComponent = ({visibility, onBackdropPress}) => {
   return (
     <Modal
-      isVisible={visibility}
+      isVisible={false}
       onBackdropPress={() => {
         onBackdropPress();
       }}>

@@ -12,12 +12,18 @@ import {SafeAreaFrameContext} from 'react-native-safe-area-context';
 import theme from '../../theme/theme';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {useState, useEffect} from 'react';
+import LottieView from 'lottie-react-native';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
 
 const LoginScreenScaning = ({navigation}: any) => {
   const [first, setfirst] = useState(1);
+  const [verifiedColor, setVerifiedColor] = useState(theme.colors.gray.gray100);
+
   useEffect(() => {
     console.log('Detecting Galactic Id');
+    setTimeout(() => {
+      setVerifiedColor(theme.colors.secondary.secondary02);
+    }, 4630);
     setTimeout(() => {
       navigation.navigate(screenNames.Login_Success);
     }, 5000);
@@ -36,14 +42,36 @@ const LoginScreenScaning = ({navigation}: any) => {
           </View>
 
           <View style={styles.idSection}>
-            <Image source={require('../../../assets/GalacticId.png')} />
+            <LottieView
+              source={require('../../../assets/animations/GalacticIdDetected.json')}
+              autoPlay
+              style={{
+                width: 250,
+                height: 150,
+              }}
+              speed={1.5}
+            />
           </View>
+
+          {/* <View style={styles.idSection}>
+          
+            <Image source={require('../../../assets/GalacticId.png')} />
+          </View> */}
 
           <View style={styles.scanningTextSection}>
             <TouchableHighlight
               activeOpacity={0.9}
               underlayColor={theme.colors.primary.primary600}>
-              <Text style={styles.scanningText}>Detecting Galactic Id</Text>
+              <Text
+                style={[
+                  styles.scanningText,
+                  {
+                    color: verifiedColor,
+                  },
+                ]}>
+                {' '}
+                Detecting Galactic Id
+              </Text>
             </TouchableHighlight>
           </View>
         </View>

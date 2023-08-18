@@ -1,4 +1,4 @@
-import {View, Text, StatusBar, ImageBackground} from 'react-native';
+import {View, Text, StatusBar, ImageBackground, Image} from 'react-native';
 import theme from '../../theme/theme';
 import {AndroidSafeArea} from '../../styles/globalStyles';
 import {styles} from '../profile/ProfileScreenStyles';
@@ -9,13 +9,30 @@ const ProfileScreen = () => {
       <StatusBar translucent backgroundColor="transparent" />
       <View style={styles.container}>
         <ImageBackground
-          source={require('../../../assets/LoginScreen.png')}
+          source={require('../../../assets/UserProfileScreen.png')}
           resizeMode="cover"
           style={styles.image}>
           {/* <View style={[{backgroundColor: theme.colors.primary.primary300}]}>
             <Text style={[{backgroundColor: theme.colors.gray.gray200}]}>
               ProfileScreen
             </Text>
+          </View> */}
+
+          {/* <Image source={require('../../../assets/User.png')} /> */}
+          {/* <View style={styles.userDetailsSection}>
+            <View style={styles.userDetails}>
+              <View style={styles.userDetails}>
+                <View
+                  style={{backgroundColor: theme.colors.primary.primary200}}>
+                  <Text>shanila</Text>
+                </View>
+                <View></View>
+              </View>
+              <View>
+                <View></View>
+                <View></View>
+              </View>
+            </View>
           </View> */}
         </ImageBackground>
       </View>
