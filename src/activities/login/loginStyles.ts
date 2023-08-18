@@ -137,10 +137,12 @@ export const styles = StyleSheet.create({
   successPara: {
     fontSize: scale(18),
     fontFamily: theme.fonts.light,
-    color:theme.colors.gray.gray200
+    color:theme.colors.white
   },
   showProfileBtn: {
     flex: 0.3,
   },
-  showProfileBtnText: {},
+  showProfileBtnText: {
+    color:theme.colors.white
+  },
 });
