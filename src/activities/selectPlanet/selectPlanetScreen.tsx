@@ -1,145 +1,92 @@
-import {View, Text, Button} from 'react-native';
-
+import {
+  View,
+  Text,
+  ImageBackground,
+  StatusBar,
+  Image,
+  TouchableHighlight,
+} from 'react-native';
 import theme from '../../theme/theme';
-import {useNavigation} from '@react-navigation/native';
+import {styles} from './selectPlanetStyles';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
-import database from '@react-native-firebase/database';
-import {useEffect, useState} from 'react';
+import SvgComponent1 from '../../../assets/svgData/planet1';
+import SvgComponent2 from '../../../assets/svgData/planet2';
+import SvgComponent3 from '../../../assets/svgData/planet3';
+import SvgComponent4 from '../../../assets/svgData/planet4';
+import SvgComponent5 from '../../../assets/svgData/planet5';
+import SvgComponent6 from '../../../assets/svgData/planet6';
+import SvgComponent7 from '../../../assets/svgData/planet7';
+import SvgComponent8 from '../../../assets/svgData/planet8';
 
-const SelectPlanetScreen = ({navigation}: any) => {
-  // const SelectPlanetScreen = () => {
-  // const [bookings, setBookings] = useState();
-  const [seats, setSeats] = useState([]);
-  // useEffect(() => {
-  //   console.log('bookings: ', bookings);
-  // }, [bookings]);
-
-  useEffect(() => {
-    const onValue = database()
-      .ref('/spaceships/1 /seat')
-      .on('value', snapshot => {
-        console.log('User data CHANGED: ', snapshot.val());
-        const arr = snapshot.val();
-        setSeats(arr[0].seats);
-      });
-    // return () => database().ref(`/spaceships/1 /seat`).off('value', onValueChange);
-  }, []);
+const SelectPlanetScreen = () => {
   return (
-    <View
-      style={{
-        backgroundColor: theme.colors.primary.primary100,
-        flex: 1,
-      }}>
-      <Text
-        style={{
-          fontFamily: theme.fonts.medium,
-        }}>
-        Screensd
-      </Text>
-      <Button
-        title="submit"
-        onPress={() =>
-          navigation.navigate(stackNames.BOOKING_STACK, {
-            screen: screenNames.StartExplore_Screen,
-          })
-        }></Button>
-      <Button
-        title="Press ME"
-        onPress={() => {
-          database()
-            .ref('/spaceships/1 /bookings')
-            .once('value')
-            .then(snapshot => {
-              const arr = snapshot.val();
-              console.log('arr: ', arr);
-              for (let index = 0; index < arr.length; index++) {
-                // console.log('index: ', index);
-                const element = arr[index];
-                if (element.date == '2021-10-01') {
-                  console.log(element);
-                  // setBookings(element.seats);
-                }
-              }
+    <>
+      <StatusBar translucent backgroundColor="transparent" />
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../../../assets/background.png')}
+          resizeMode="cover"
+          style={styles.bgimage}>
+          {/* inner container common for all screens */}
+          {/* Keep this as the main contaier  */}
+          <View style={styles.innerContainer}>
+            <View style={styles.dateDetailsDiv}>
+              <Text style={styles.mainText}>GSD.2163.08.15.01.40</Text>
+              <Text style={styles.subText}>You are in Earth</Text>
+            </View>
 
-              console.log('User data: ', snapshot.val());
-            });
-        }}
-      />
-      <Button
-        title="ETCH"
-        onPress={() => {
-          database()
-            .ref('/spaceships/1 /bookings')
-            .once('value')
-            .then(snapshot => {
-              const targetDate = '2021-10-01';
+            <View style={styles.mainDetailsDiv}>
+              <Text style={styles.subTitle}>
+                Welcome, <Text style={styles.boldText}>AstroWheels</Text>
+              </Text>
+              <Text style={styles.mainTitle}>Where do you want to go?</Text>
+              <Text style={styles.belowText}>Choose Your Cosmic Journey</Text>
+            </View>
 
-              const arr = snapshot.val();
-              const updatedBookings = arr.map(booking => {
-                if (booking.date === targetDate) {
-                  // Clone the booking object and add the new seat to the seats array
-                  return {
-                    ...booking,
-                    seats: [...booking.seats, 40],
-                  };
-                }
-                return booking;
-              });
+            <TouchableHighlight
+              underlayColor={theme.colors.gray.gray900}
+              style={styles.planet7}
+              onPress={() => console.log(7)}>
+              <SvgComponent7 />
+            </TouchableHighlight>
 
-              console.log('User data: ', updatedBookings);
+            <TouchableHighlight style={styles.planet8}>
+              <SvgComponent8 />
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.planet6}>
+              <SvgComponent6 />
+            </TouchableHighlight>
 
-              database()
-                .ref('/spaceships/1 /')
-                .update({bookings: updatedBookings});
-            });
-        }}
-      />
-      <Button
-        title="sdsd"
-        onPress={() => {
-          database()
-            .ref('/spaceships/1 /seat')
-            .once('value')
-            .then(snapshot => {
-              const arr = snapshot.val();
-              console.log('seat: ', arr);
-              const packageId = 2;
-              const seatId = 2;
-              const updatedSeats = arr.map(packageSeat => {
-                if (packageSeat.packageId === packageId) {
-                  console.log('packageSeat: ', packageSeat);
-                  const updatedSeat = packageSeat.seats.find(
-                    seat => seat.seatId === seatId,
-                  );
-                  if (updatedSeat) {
-                    updatedSeat.booked = true;
-                  }
-                }
-                return packageSeat;
-              });
-              database()
-                .ref('/spaceships/1 /')
-                .update({seat: updatedSeats})
-                .then(() => console.log('done'));
-            });
-        }}
-      />
+            <TouchableHighlight style={styles.planet5}>
+              <SvgComponent5 />
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.planet4}>
+              <SvgComponent4 />
+            </TouchableHighlight>
 
-      {seats.map(item => {
-        return (
-          <View>
-            <Text>{item.seatId}</Text>
-            {item.booked == true ? (
-              <Text>Booked</Text>
-            ) : (
-              <Text>Not Booked</Text>
-            )}
-            {/* <Text>{item.booked}</Text> */}
+            <TouchableHighlight style={styles.planet3}>
+              <Image
+                source={require('../../../assets/image5.png')}
+                style={styles.planet3}
+              />
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.planet2}>
+              <SvgComponent2 />
+            </TouchableHighlight>
+
+            <TouchableHighlight style={styles.planet1}>
+              <Image
+                source={require('../../../assets/image6.png')}
+                style={styles.planet1}
+              />
+            </TouchableHighlight>
           </View>
-        );
-      })}
-    </View>
+        </ImageBackground>
+      </View>
+    </>
   );
 };
 
