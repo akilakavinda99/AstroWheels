@@ -1,20 +1,19 @@
-import { View, Text , ImageBackground} from 'react-native'
-import { style, styletwo } from './destinationStyle';
+import {View, Text, ImageBackground} from 'react-native';
+import {style, styletwo} from './destinationStyle';
 
-const DestinationContent = ({title,para}: any) => {
+const DestinationContent = ({title, para, image}: any) => {
   return (
     <View>
-       <ImageBackground
-          style={styletwo.backgroundimg}
-          source={require('../../../assets/images/bgone.png')}
-        >
-          <Text style={styletwo.title}>{title}</Text>
-          <Text style={styletwo.para}>
-            {para}
-          </Text>
-          </ImageBackground>
+      <ImageBackground
+        style={styletwo.backgroundimg}
+        source={{
+          uri: image,
+        }}>
+        <Text style={styletwo.title}>{title}</Text>
+        <Text style={styletwo.para}>{para}</Text>
+      </ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default DestinationContent
+export default DestinationContent;

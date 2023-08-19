@@ -1,8 +1,3 @@
-import {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {stackNames} from '../../constants/navigationConstants/stackNames';
-import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {
   Text,
   View,
@@ -12,31 +7,43 @@ import {
   ToastAndroid,
   ImageBackground,
   Button,
+  FlatList,
 } from 'react-native';
-
 import './destinationStyle';
 import {style, styletwo} from './destinationStyle';
 import Back from '../back/backScreen';
 import DestinationContent from './destinationContent';
+import {useAppContext} from '../../context/AppContext';
 
 export const ExplorationHub = ({navigation}: any) => {
+  const {planet} = useAppContext();
+  console.log(planet);
   return (
     <View>
       <Text style={styletwo.maintitle}>Specifications</Text>
 
-      <View style={styletwo.topsection}>
-        <DestinationContent
-          title="Valles Marineris"
-          para="Travelers could explore its towering cliffs, winding valleys, and potentially discover evidence of Mars' ancient geological and hydrological history."
-        />
-      </View>
+      <FlatList
+        data={planet.places}
+        renderItem={details => {
+          console.log('dsds', details);
+          return (
+            <View style={styletwo.topsection} key={details.index}>
+              <DestinationContent
+                title={details.item.title}
+                para={details.item.description}
+                image={details.item.image}
+              />
+            </View>
+          );
+        }}
+      />
 
-      <View style={styletwo.topsectiontwo}>
+      {/* <View style={styletwo.topsectiontwo}>
         <DestinationContent
           title="Curiosity Rover Landing Sit"
           para="Have you ever dreamed of walking in the footsteps of pioneers? You can make that dream a reality by visiting the  iconic landing site of the Curiosity Rover on Mars"
         />
-      </View>
+      </View> */}
 
       <View style={styletwo.bottomsection}>
         <View style={styletwo.subsection}>
