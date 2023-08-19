@@ -19,21 +19,21 @@ const ProfileScreen = () => {
           </View> */}
 
           {/* <Image source={require('../../../assets/User.png')} /> */}
-          {/* <View style={styles.userDetailsSection}>
+          <View style={styles.userDetailsSection}>
             <View style={styles.userDetails}>
               <View style={styles.userDetails}>
                 <View
                   style={{backgroundColor: theme.colors.primary.primary200}}>
                   <Text>shanila</Text>
                 </View>
-                <View></View>
+                <View>shanilka fer</View>
               </View>
               <View>
-                <View></View>
-                <View></View>
+                <View>shanilka maiya</View>
+                <View>shanilka fernando</View>
               </View>
             </View>
-          </View> */}
+          </View>
         </ImageBackground>
       </View>
     </View>
