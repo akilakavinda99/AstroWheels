@@ -1,8 +1,10 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {StyleSheet} from 'react-native';
 import theme from '../../theme/theme';
-import {styles} from './backStyle';
-import {useNavigation} from '@react-navigation/native';
+import { styles } from './backStyle';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const Back = ({title}: any) => {
   const navigation = useNavigation();

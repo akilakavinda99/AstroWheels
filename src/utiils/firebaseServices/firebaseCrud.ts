@@ -3,7 +3,7 @@ import {documentNames} from '../../constants/firebaseConstants/documentNames';
 
 export const addDataToFirebase = async ({reference, data}: any) => {
   database()
-    .ref(reference)
+    .ref(`/${reference}`)
     .set(data)
     .then(() => console.log('Data set.'))
     .catch(error => console.log(error));

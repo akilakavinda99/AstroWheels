@@ -15,17 +15,23 @@ const RootNavigationStack = () => {
         <RootStackNav.Screen
           name={stackNames.AUTH_STACK}
           component={AuthStack}
-          options={navConfig}
+          options={{
+            ...navConfig,
+            animation: 'slide_from_right',
+          }}
         />
         <RootStackNav.Screen
           name={stackNames.TABS_STACK}
           component={Tabs}
           options={navConfig}
         />
-           <RootStackNav.Screen
+        <RootStackNav.Screen
           name={stackNames.BOOKING_STACK}
           component={BookingStack}
-          options={navConfig}
+          options={{
+            ...navConfig,
+            animation: 'slide_from_right',
+          }}
         />
       </RootStackNav.Navigator>
     </NavigationContainer>

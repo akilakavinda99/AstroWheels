@@ -9,11 +9,6 @@ const SignUpModelComponent = ({
   buttonFunction,
 }) => {
   return (
-    <Modal
-      isVisible={false}
-      onBackdropPress={() => {
-        onBackdropPress();
-      }}>
     <Modal isVisible={visibility}>
       <View
         style={{
