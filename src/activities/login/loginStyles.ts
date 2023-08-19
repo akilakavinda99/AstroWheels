@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
   signupSection: {
     display: 'flex',
     flex: 0.2,
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
     // paddingBottom:20,
@@ -137,12 +137,12 @@ export const styles = StyleSheet.create({
   successPara: {
     fontSize: scale(18),
     fontFamily: theme.fonts.light,
-    color:theme.colors.white
+    color: theme.colors.white,
   },
   showProfileBtn: {
     flex: 0.3,
   },
   showProfileBtnText: {
-    color:theme.colors.white
+    color: theme.colors.white,
   },
 });

@@ -1,19 +1,25 @@
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import theme from '../../theme/theme';
 import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
-const ModelComponent = ({visibility, onBackdropPress}) => {
+import ModelButton from './modelButton';
+const SignUpModelComponent = ({
+  visibility,
+  onBackdropPress,
+  buttonFunction,
+}) => {
   return (
     <Modal
       isVisible={false}
       onBackdropPress={() => {
         onBackdropPress();
       }}>
+    <Modal isVisible={visibility}>
       <View
         style={{
           backgroundColor: theme.colors.primary.primary200,
           borderRadius: 20,
-          height: scale(150),
+          height: scale(180),
         }}>
         <Text
           style={{
@@ -41,12 +47,40 @@ const ModelComponent = ({visibility, onBackdropPress}) => {
           }}>
           Select a dummy account to continue
         </Text>
-        <View>
-          <Button title="sdsd" />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+          }}>
+          <ModelButton
+            text={'User 1'}
+            onPress={val => {
+              buttonFunction(val);
+              onBackdropPress();
+            }}
+            value={1}
+          />
+          <ModelButton
+            text={'User 2'}
+            onPress={val => {
+              buttonFunction(val);
+              onBackdropPress();
+            }}
+            value={2}
+          />
+          <ModelButton
+            text={'User 2'}
+            onPress={val => {
+              buttonFunction(val);
+              onBackdropPress();
+            }}
+            value={3}
+          />
         </View>
       </View>
     </Modal>
   );
 };
 
-export default ModelComponent;
+export default SignUpModelComponent;
