@@ -4,13 +4,14 @@ import AuthStack from './stacks/authStack';
 import {stackNames} from '../constants/navigationConstants/stackNames';
 import Tabs from './tabNavigation';
 import {navConfig} from './navigationConfig';
+import BookingStack from './stacks/bookingStack';
 
 const RootStackNav = createNativeStackNavigator();
 
 const RootNavigationStack = () => {
   return (
     <NavigationContainer>
-      <RootStackNav.Navigator initialRouteName={stackNames.TABS_STACK}>
+      <RootStackNav.Navigator initialRouteName={stackNames.AUTH_STACK}>
         <RootStackNav.Screen
           name={stackNames.AUTH_STACK}
           component={AuthStack}
@@ -19,6 +20,11 @@ const RootNavigationStack = () => {
         <RootStackNav.Screen
           name={stackNames.TABS_STACK}
           component={Tabs}
+          options={navConfig}
+        />
+           <RootStackNav.Screen
+          name={stackNames.BOOKING_STACK}
+          component={BookingStack}
           options={navConfig}
         />
       </RootStackNav.Navigator>
