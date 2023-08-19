@@ -1,10 +1,7 @@
 import {
-  Alert,
   ImageBackground,
-  SafeAreaView,
   StatusBar,
   Text,
-  ToastAndroid,
   TouchableHighlight,
   TouchableOpacity,
   View,
@@ -13,35 +10,25 @@ import LinearGradient from 'react-native-linear-gradient';
 import theme from '../../theme/theme';
 import {styles} from '../login/loginStyles';
 import {AndroidSafeArea} from '../../styles/globalStyles';
-import {stackNames} from '../../constants/navigationConstants/stackNames';
-import {screenNames} from '../../constants/navigationConstants/screenNames';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import SignUpModelComponent from '../../components/commonComponents/modelComponent';
-import {storeData} from '../../utiils/asyncStore/asyncStoreFunctions';
-import {asyncKeys} from '../../constants/asyncKeys';
+import {launchFunction} from './loginUtils';
+import Animated, {
+  FlipInXUp,
+  Easing,
+  FadeInLeft,
+  BounceInLeft,
+  FadeInUp,
+  FadeIn,
+  ZoomIn,
+  SlideInLeft,
+  SlideInDown,
+  BounceIn,
+} from 'react-native-reanimated';
 
 const LoginScreen = ({onPress, navigation}: any) => {
   const [testingModelVisible, setTestingModelVisible] = useState(false);
   const [userId, setUserId] = useState(null);
-
-  const launchFunction = async () => {
-    if (userId == null) {
-      ToastAndroid.show('Please use signup', ToastAndroid.SHORT);
-    } else {
-      const userIdStored = await storeData({
-        key: asyncKeys.USER_ID,
-        value: '1',
-      });
-      if (userIdStored) {
-        navigation.navigate(stackNames.AUTH_STACK, {
-          screen: screenNames.Login_ID_Screen,
-          params: {
-            userId,
-          },
-        });
-      }
-    }
-  };
 
   return (
     <View style={AndroidSafeArea}>
@@ -52,7 +39,9 @@ const LoginScreen = ({onPress, navigation}: any) => {
           resizeMode="cover"
           style={styles.image}>
           <View style={styles.heroSection}>
-            <View style={styles.text}>
+            <Animated.View
+              style={styles.text}
+              entering={ZoomIn.duration(600).easing(Easing.ease)}>
               <Text style={styles.mainText}>
                 Welcome to Astro
                 <Text style={styles.spanText}>Wheels</Text>
@@ -60,9 +49,11 @@ const LoginScreen = ({onPress, navigation}: any) => {
               <View>
                 <Text style={styles.subText}>Your Journey Begins Here!</Text>
               </View>
-            </View>
+            </Animated.View>
 
-            <View style={styles.heroButtonSection}>
+            <Animated.View
+              style={styles.heroButtonSection}
+              entering={BounceIn.duration(600).easing(Easing.ease)}>
               <LinearGradient
                 colors={[
                   'rgba(0, 0, 0, 0.00)',
@@ -79,13 +70,15 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   style={styles.buttonSection}
                   activeOpacity={0.9}
                   underlayColor={theme.colors.primary.primary600}
-                  onPress={launchFunction}>
+                  onPress={() => launchFunction(userId, navigation)}>
                   <Text style={styles.launchButton}>Tap to Launch</Text>
                 </TouchableHighlight>
               </LinearGradient>
-            </View>
+            </Animated.View>
 
-            <View style={styles.signupSection}>
+            <Animated.View
+              style={styles.signupSection}
+              entering={ZoomIn.duration(600).easing(Easing.ease)}>
               <Text style={styles.signupText}>You don't have account?</Text>
 
               <TouchableOpacity
@@ -101,7 +94,7 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   Signup
                 </Text>
               </TouchableOpacity>
-            </View>
+            </Animated.View>
           </View>
         </ImageBackground>
 

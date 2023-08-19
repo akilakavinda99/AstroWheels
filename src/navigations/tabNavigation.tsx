@@ -32,6 +32,7 @@ const Tabs = () => {
         component={SelectPlanetScreen}
         options={{
           ...navConfig,
+
           tabBarIcon: ({color, size, focused}) => (
             <RocketSvg focused={focused} />
           ),
@@ -42,6 +43,7 @@ const Tabs = () => {
         component={ProfileScreen}
         options={{
           ...navConfig,
+
           tabBarIcon: ({color, size, focused}) => <Profile focused={focused} />,
         }}
       />

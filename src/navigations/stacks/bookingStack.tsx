@@ -5,6 +5,7 @@ import {navConfig} from '../navigationConfig';
 import StartExploreScreen from '../../activities/startExplore/startExploreScreen';
 import Destination from '../../activities/destination/destinationScreen';
 import ConfirmBookingScreen from '../../activities/confirmBooking/confirmBookingScreen';
+import SuccessBooking from '../../activities/successBooking/successBookingScreen';
 // import loginScreen from '../../activities/login/loginScreen';
 
 const BookingStackNav = createNativeStackNavigator();
@@ -15,16 +16,24 @@ const BookingStack = () => {
       <BookingStackNav.Screen
         name={screenNames.StartExplore_Screen}
         component={StartExploreScreen}
-        options={navConfig}
+        options={{
+          ...navConfig,
+          animation: 'slide_from_right',
+        }}
       />
       <BookingStackNav.Screen
         name={screenNames.Destination_Screen}
         component={Destination}
         options={navConfig}
       />
-        <BookingStackNav.Screen
+      <BookingStackNav.Screen
         name={screenNames.ConfirmBooking_Screen}
         component={ConfirmBookingScreen}
+        options={navConfig}
+      />
+           <BookingStackNav.Screen
+        name={screenNames.SuccessBooking_Screen}
+        component={SuccessBooking}
         options={navConfig}
       />
     </BookingStackNav.Navigator>
