@@ -49,6 +49,7 @@ const theme = {
     small: 12,
     medium: 16,
     large: 20,
+    exlarge: 38
     // Add more font size definitions as needed
   },
 };
