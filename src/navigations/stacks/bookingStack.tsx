@@ -15,14 +15,17 @@ const BookingStack = () => {
       <BookingStackNav.Screen
         name={screenNames.StartExplore_Screen}
         component={StartExploreScreen}
-        options={navConfig}
+        options={{
+          ...navConfig,
+          animation: 'slide_from_right',
+        }}
       />
       <BookingStackNav.Screen
         name={screenNames.Destination_Screen}
         component={Destination}
         options={navConfig}
       />
-        <BookingStackNav.Screen
+      <BookingStackNav.Screen
         name={screenNames.ConfirmBooking_Screen}
         component={ConfirmBookingScreen}
         options={navConfig}

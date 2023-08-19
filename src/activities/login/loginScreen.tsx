@@ -1,10 +1,7 @@
 import {
-  Alert,
   ImageBackground,
-  SafeAreaView,
   StatusBar,
   Text,
-  ToastAndroid,
   TouchableHighlight,
   TouchableOpacity,
   View,
@@ -13,35 +10,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import theme from '../../theme/theme';
 import {styles} from '../login/loginStyles';
 import {AndroidSafeArea} from '../../styles/globalStyles';
-import {stackNames} from '../../constants/navigationConstants/stackNames';
-import {screenNames} from '../../constants/navigationConstants/screenNames';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import SignUpModelComponent from '../../components/commonComponents/modelComponent';
-import {storeData} from '../../utiils/asyncStore/asyncStoreFunctions';
-import {asyncKeys} from '../../constants/asyncKeys';
+import {launchFunction} from './loginUtils';
 
 const LoginScreen = ({onPress, navigation}: any) => {
   const [testingModelVisible, setTestingModelVisible] = useState(false);
   const [userId, setUserId] = useState(null);
-
-  const launchFunction = async () => {
-    if (userId == null) {
-      ToastAndroid.show('Please use signup', ToastAndroid.SHORT);
-    } else {
-      const userIdStored = await storeData({
-        key: asyncKeys.USER_ID,
-        value: '1',
-      });
-      if (userIdStored) {
-        navigation.navigate(stackNames.AUTH_STACK, {
-          screen: screenNames.Login_ID_Screen,
-          params: {
-            userId,
-          },
-        });
-      }
-    }
-  };
 
   return (
     <View style={AndroidSafeArea}>
@@ -79,7 +54,7 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   style={styles.buttonSection}
                   activeOpacity={0.9}
                   underlayColor={theme.colors.primary.primary600}
-                  onPress={launchFunction}>
+                  onPress={() => launchFunction(userId, navigation)}>
                   <Text style={styles.launchButton}>Tap to Launch</Text>
                 </TouchableHighlight>
               </LinearGradient>

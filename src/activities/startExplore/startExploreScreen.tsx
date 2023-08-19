@@ -13,8 +13,15 @@ import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {styles} from './startExploreStyles';
 import Back from '../back/backScreen';
 import {useEffect} from 'react';
+import {onPressStartExplore} from './startExploreUtils';
+import {getDataFromFirebase} from '../../utiils/firebaseServices/firebaseCrud';
 
 const StartExploreScreen = ({navigation}: any) => {
+  // useEffect(() => {
+  //   const getPlanetDetails = async () => {
+  //     const planetDetails = await getDataFromFirebase();
+  //   };
+  // }, []);
   return (
     <ImageBackground
       style={styles.backgroundImage}
@@ -35,11 +42,7 @@ const StartExploreScreen = ({navigation}: any) => {
             </Text>
             <Pressable
               style={styles.button}
-              onPress={() =>
-                navigation.navigate(stackNames.BOOKING_STACK, {
-                  screen: screenNames.Destination_Screen,
-                })
-              }>
+              onPress={() => onPressStartExplore(navigation)}>
               <Text style={styles.textbtn}>Start Exploring</Text>
             </Pressable>
           </View>
