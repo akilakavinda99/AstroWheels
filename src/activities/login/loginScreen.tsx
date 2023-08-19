@@ -13,6 +13,18 @@ import {AndroidSafeArea} from '../../styles/globalStyles';
 import {useState} from 'react';
 import SignUpModelComponent from '../../components/commonComponents/modelComponent';
 import {launchFunction} from './loginUtils';
+import Animated, {
+  FlipInXUp,
+  Easing,
+  FadeInLeft,
+  BounceInLeft,
+  FadeInUp,
+  FadeIn,
+  ZoomIn,
+  SlideInLeft,
+  SlideInDown,
+  BounceIn,
+} from 'react-native-reanimated';
 
 const LoginScreen = ({onPress, navigation}: any) => {
   const [testingModelVisible, setTestingModelVisible] = useState(false);
@@ -27,7 +39,9 @@ const LoginScreen = ({onPress, navigation}: any) => {
           resizeMode="cover"
           style={styles.image}>
           <View style={styles.heroSection}>
-            <View style={styles.text}>
+            <Animated.View
+              style={styles.text}
+              entering={ZoomIn.duration(600).easing(Easing.ease)}>
               <Text style={styles.mainText}>
                 Welcome to Astro
                 <Text style={styles.spanText}>Wheels</Text>
@@ -35,9 +49,11 @@ const LoginScreen = ({onPress, navigation}: any) => {
               <View>
                 <Text style={styles.subText}>Your Journey Begins Here!</Text>
               </View>
-            </View>
+            </Animated.View>
 
-            <View style={styles.heroButtonSection}>
+            <Animated.View
+              style={styles.heroButtonSection}
+              entering={BounceIn.duration(600).easing(Easing.ease)}>
               <LinearGradient
                 colors={[
                   'rgba(0, 0, 0, 0.00)',
@@ -58,9 +74,11 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   <Text style={styles.launchButton}>Tap to Launch</Text>
                 </TouchableHighlight>
               </LinearGradient>
-            </View>
+            </Animated.View>
 
-            <View style={styles.signupSection}>
+            <Animated.View
+              style={styles.signupSection}
+              entering={ZoomIn.duration(600).easing(Easing.ease)}>
               <Text style={styles.signupText}>You don't have account?</Text>
 
               <TouchableOpacity
@@ -76,7 +94,7 @@ const LoginScreen = ({onPress, navigation}: any) => {
                   Signup
                 </Text>
               </TouchableOpacity>
-            </View>
+            </Animated.View>
           </View>
         </ImageBackground>
 

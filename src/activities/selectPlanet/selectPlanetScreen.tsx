@@ -36,8 +36,13 @@ const SelectPlanetScreen = ({navigation}) => {
       console.log(planet);
       navigation.navigate(stackNames.BOOKING_STACK, {
         screen: screenNames.StartExplore_Screen,
+        params: {planet: planet},
       });
     }
+
+    return () => {
+      setPlanet(null);
+    };
   }, [planet]);
   return (
     <>

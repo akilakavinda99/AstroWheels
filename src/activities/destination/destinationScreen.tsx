@@ -46,7 +46,7 @@ export default function Destination() {
     <ImageBackground
       style={styletwo.backgroundImage}
       source={require('../../../assets/images/Background.png')}>
-      <View style={{flex: 1, marginLeft: 20, marginRight: 20}}>
+      <View style={styletwo.container}>
         <Back title="Planet Destination" />
 
         <View style={styletwo.buttonContainer}>
