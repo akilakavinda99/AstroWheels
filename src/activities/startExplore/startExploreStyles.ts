@@ -3,56 +3,48 @@ import {scale, verticalScale, moderateScale} from 'react-native-size-matters';
 import theme from '../../theme/theme';
 
 export const styles = StyleSheet.create({
-  container:{
-    marginLeft: 20,
+  container: {
+    marginHorizontal: '5%',
   },
-  mainbox:{
-   
+  mainbox: {},
+  box: {
+    marginHorizontal: '5%',
   },
- box:{
-  marginHorizontal:20,
-  alignSelf: 'flex-end',
-  elevation: 3,
-  
-  
- },
 
-backgroundImage: {flex: 1, width: '100%', height: '100%'},
-mainimg: {
-  padding: moderateScale(15),
-  borderRadius: 8, 
-  height: '40%',
-  width: '100%',
-  marginTop: 50,
-  resizeMode: 'contain'
-},
-  subheader:{
+  backgroundImage: {flex: 1, width: '100%', height: '100%'},
+  mainimg: {
+    padding: moderateScale(15),
+    borderRadius: 8,
+    height: '40%',
+    width: '100%',
+    marginTop: '10%',
+    resizeMode: 'contain',
+  },
+  subheader: {
     fontSize: 14,
     fontFamily: theme.fonts.bold,
-    paddingVertical: 8,
-    marginTop: 80,
-    bottom: 5,
-    color: '#9A989A'
+    paddingVertical:'3%',
+    marginTop: '25%',
+    bottom: '2%',
+    color: '#9A989A',
   },
-  main:{
+  main: {
     fontSize: 24,
     fontFamily: theme.fonts.bold,
-    paddingVertical: 8,
-    bottom: 5,
+    paddingVertical:'3%',
+    bottom: '2%',
     color: '#FFFFFF',
-    
   },
-  button:{
+  button: {
     backgroundColor: '#40235E',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical:'4%',
     borderRadius: 8,
   },
-  textbtn:{
-    color:"#FFFFFF",
+  textbtn: {
+    color: '#FFFFFF',
     fontSize: 20,
     fontFamily: theme.fonts.bold,
-  }
+  },
 });
