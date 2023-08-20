@@ -128,5 +128,13 @@ export const style = StyleSheet.create({
     color:'#C4B1D8',
     paddingBottom: '3%',
     marginLeft:'7%'
+  },
+  line:{
+    height: 2,
+    backgroundColor: 'white',
+    width: '17%',
+    position: 'absolute',
+    top: '37%',
+    left: '43%'
   }
 });

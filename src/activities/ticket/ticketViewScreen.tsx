@@ -19,10 +19,14 @@ const TicketViewScreen = () => {
      <TicketContent
      fromplanet="Earth"
      toplanet="Mars"
+     fromlocation="Colombo"
+     tolocation="Esraults"
      />
      <TicketContent
      fromplanet="Earth"
-     toplanet="Mars"
+     toplanet="Venus"
+     fromlocation="Kandy"
+     tolocation="Orion"
      />
     </View>
     </ImageBackground>

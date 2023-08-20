@@ -11,6 +11,9 @@ import Location from '../../assets/svgData/tabBarIcons/location';
 import Settings from '../../assets/svgData/tabBarIcons/settings';
 import Place from '../../assets/svgData/tabBarIcons/location';
 import TicketViewScreen from '../activities/ticket/ticketViewScreen';
+import ConfirmBookingScreen from '../activities/confirmBooking/confirmBookingScreen';
+import Destination from '../activities/destination/destinationScreen';
+import SuccessBooking from '../activities/successBooking/successBookingScreen';
 const Tab = createBottomTabNavigator();
 // screens related to the tab bar
 const Tabs = () => {

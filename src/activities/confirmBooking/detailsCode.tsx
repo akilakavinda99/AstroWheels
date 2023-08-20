@@ -29,6 +29,7 @@ const DetailsCode = () => {
               <Text style={style.datet}>Sat, sep</Text>
             </View>
           </View>
+          <View style={style.line} />
         </View>
         <View style={style.codesection}>
           <Text style={style.press}>Press</Text>

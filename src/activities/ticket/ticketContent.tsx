@@ -3,7 +3,7 @@ import React from 'react'
 import { styles } from './ticketViewStyle';
 import {style} from '../confirmBooking/confirmBookingStyle';
 
-const TicketContent = ({fromplanet, toplanet}: any) => {
+const TicketContent = ({fromplanet, toplanet,fromlocation, tolocation}: any) => {
   return (
     <View style={styles.card}>
    <View>
@@ -13,7 +13,7 @@ const TicketContent = ({fromplanet, toplanet}: any) => {
             <Text style={styles.gsd}>GSD.2163.08.15.01.40</Text>
 
             <Text style={style.planet}>{fromplanet}</Text>
-            <Text style={style.location}>{toplanet}</Text>
+            <Text style={style.location}>{fromlocation}</Text>
 
             {/* <Text style={style.time}>09:25 AM</Text>
             <Text style={style.date}>Fri, sep</Text> */}
@@ -24,8 +24,8 @@ const TicketContent = ({fromplanet, toplanet}: any) => {
              
               <Text style={style.vehiclet}>SP4892-X</Text>
 
-              <Text style={styles.planett}>Mars</Text>
-              <Text style={style.locationt}>Esraults</Text>
+              <Text style={styles.planett}>{toplanet}</Text>
+              <Text style={style.locationt}>{tolocation}</Text>
 
               {/* <Text style={style.timet}>12:04 PM</Text>
               <Text style={style.datet}>Sat, sep</Text> */}
@@ -55,7 +55,7 @@ const TicketContent = ({fromplanet, toplanet}: any) => {
       </View>
                </View>
           </View>
-      
+          <View style={styles.line} />
     </View>
   )
 }

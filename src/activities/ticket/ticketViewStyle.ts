@@ -79,4 +79,12 @@ box: {
     textAlign: 'right',
     marginTop: '9%'
   },
+  line:{
+    height: 2,
+    backgroundColor: 'white',
+    width: '16%',
+    position: 'absolute',
+    top: '50%',
+    left: '45%'
+  }
 })
