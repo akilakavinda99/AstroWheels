@@ -22,13 +22,13 @@ import {
   ViroAnimations,
 } from '@viro-community/react-viro';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RootNavigationStack from './src/navigations/rootNavigation';
 import {AppProvider} from './src/context/AppContext';
 import {StyleSheet} from 'react-native';
-
+import RNBootSplash from 'react-native-bootsplash';
 const HelloWorldSceneAR = () => {
   const [text, setText] = useState('Initializing AR...');
 
@@ -139,6 +139,10 @@ const HelloWorldSceneAR = () => {
 //   }}></ViroARSceneNavigator>
 
 function App() {
+  useEffect(() => {
+    RNBootSplash.hide({fade: true, duration: 500});
+  }, []);
+
   return (
     <AppProvider>
       {/* <ViroARSceneNavigator
