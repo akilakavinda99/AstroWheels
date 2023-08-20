@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
   },
   scanningText: {
     fontSize: 22,
-    color: theme.colors.gray.gray200,
+    
     fontWeight: '300',
     fontFamily: theme.fonts.light,
   },
