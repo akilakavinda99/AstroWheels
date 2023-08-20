@@ -7,6 +7,8 @@ import Destination from '../../activities/destination/destinationScreen';
 import ConfirmBookingScreen from '../../activities/confirmBooking/confirmBookingScreen';
 import SuccessBooking from '../../activities/successBooking/successBookingScreen';
 import SpaceshipsScreen from '../../activities/spaceships/spaceshipsScreen';
+import ArScreen from '../../activities/ar/arScreen';
+import WebComponent from '../../activities/ar/webView';
 // import loginScreen from '../../activities/login/loginScreen';
 
 const BookingStackNav = createNativeStackNavigator();
@@ -41,6 +43,19 @@ const BookingStack = () => {
         name={screenNames.Spaceship_Screen}
         component={SpaceshipsScreen}
         options={navConfig}
+      />
+      <BookingStackNav.Screen
+        name={screenNames.Ar_Screen}
+        component={ArScreen}
+        options={navConfig}
+      />
+      <BookingStackNav.Screen
+        name={screenNames.Web_View}
+        component={WebComponent}
+        options={{
+          ...navConfig,
+          orientation: 'landscape',
+        }}
       />
     </BookingStackNav.Navigator>
   );
