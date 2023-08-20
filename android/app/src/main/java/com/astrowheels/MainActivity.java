@@ -4,7 +4,8 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
-
+import com.zoontek.rnbootsplash.RNBootSplash;
+import android.os.Bundle;
 public class MainActivity extends ReactActivity {
 
   /**
@@ -14,6 +15,12 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "AstroWheels";
+  }
+
+    @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    RNBootSplash.init(this); // ⬅️ initialize the splash screen
+    super.onCreate(savedInstanceState); // or super.onCreate(null) with react-native-screens
   }
 
   /**

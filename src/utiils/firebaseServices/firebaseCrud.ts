@@ -3,7 +3,7 @@ import {documentNames} from '../../constants/firebaseConstants/documentNames';
 
 export const addDataToFirebase = async ({reference, data}: any) => {
   database()
-    .ref(reference)
+    .ref(`/${reference}`)
     .set(data)
     .then(() => console.log('Data set.'))
     .catch(error => console.log(error));
@@ -11,7 +11,7 @@ export const addDataToFirebase = async ({reference, data}: any) => {
 
 export const updateDataInFirebase = async ({reference, data}: any) => {
   database()
-    .ref(reference)
+    .ref(`/${reference}`)
     .update(data)
     .then(() => console.log('Data set.'))
     .catch(error => console.log(error));
@@ -19,6 +19,7 @@ export const updateDataInFirebase = async ({reference, data}: any) => {
 
 export const getDataFromFirebase = async ({reference}: any) => {
   try {
+    console.log(reference);
     const snapshot = await database().ref(`/${reference}`).once('value');
     console.log('Sdsds', snapshot.val());
     return snapshot.val();

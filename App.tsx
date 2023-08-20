@@ -22,12 +22,13 @@ import {
   ViroAnimations,
 } from '@viro-community/react-viro';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RootNavigationStack from './src/navigations/rootNavigation';
 import {AppProvider} from './src/context/AppContext';
-
+import {StyleSheet} from 'react-native';
+import RNBootSplash from 'react-native-bootsplash';
 const HelloWorldSceneAR = () => {
   const [text, setText] = useState('Initializing AR...');
 
@@ -72,7 +73,7 @@ const HelloWorldSceneAR = () => {
           <ViroSpotLight
             innerAngle={5}
             outerAngle={45}
-            direction={[0, -1, -0.2]}
+            direction={[6, -5, -0.2]}
             position={[0, 3, 0]}
             color="#ffffff"
             castsShadow={true}
@@ -83,23 +84,23 @@ const HelloWorldSceneAR = () => {
             shadowOpacity={0.7}
           />
           <Viro3DObject
-            source={require('./assets/dr/scene.gltf')}
+            source={require('./er.glb')}
             position={[0, 0, -1]}
-            scale={[0.02, 0.05, 0.02]}
-            type="GLTF"
+            scale={[0.05, 0.05, 0.05]}
+            type="GLB"
             lightReceivingBitMask={3}
             shadowCastingBitMask={2}
             transformBehaviors={['billboardY']}
             onRotate={(rotateState, rotationFactor, source) => {
               setRotation([0, 0 + rotationFactor, 0]);
             }}
-            resources={[
-              require('./assets/dr/textures/Material_normal.png'),
-              require('./assets/dr/textures/Material_baseColor.png'),
-              require('./assets/dr/textures/Material_metallicRoughness.png'),
+            // resources={[
+            //   require('./assets/dr/textures/Material_normal.png'),
+            //   require('./assets/dr/textures/Material_baseColor.png'),
+            //   require('./assets/dr/textures/Material_metallicRoughness.png'),
 
-              require('./assets/dr/scene.bin'),
-            ]}
+            //   require('./assets/dr/scene.bin'),
+            // ]}
             animation={{
               name: 'rotate', // Use the registered animation name
               run: true, // Start the animation
@@ -138,22 +139,34 @@ const HelloWorldSceneAR = () => {
 //   }}></ViroARSceneNavigator>
 
 function App() {
+  useEffect(() => {
+    RNBootSplash.hide({fade: true, duration: 500});
+  }, []);
+
   return (
     <AppProvider>
+      {/* <ViroARSceneNavigator
+        autofocus={true}
+        initialScene={{
+          scene: HelloWorldSceneAR,
+        }}
+        style={{
+          flex: 1,
+        }}></ViroARSceneNavigator> */}
       <RootNavigationStack />
     </AppProvider>
   );
 }
-// var styles = StyleSheet.create({
-//   f1: {flex: 1},
-//   helloWorldTextStyle: {
-//     // fontFamily: ,
-//     fontSize: 10,
-//     fontWeight: '700',
-//     color: '#ffffff',
-//     textAlignVertical: 'center',
-//     textAlign: 'center',
-//   },
-// });
+var styles = StyleSheet.create({
+  f1: {flex: 1},
+  helloWorldTextStyle: {
+    // fontFamily: ,
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+});
 
 export default App;

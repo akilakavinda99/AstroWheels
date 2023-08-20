@@ -10,6 +10,10 @@ import Profile from '../../assets/svgData/tabBarIcons/profile';
 import Location from '../../assets/svgData/tabBarIcons/location';
 import Settings from '../../assets/svgData/tabBarIcons/settings';
 import Place from '../../assets/svgData/tabBarIcons/location';
+import TicketViewScreen from '../activities/ticket/ticketViewScreen';
+import ConfirmBookingScreen from '../activities/confirmBooking/confirmBookingScreen';
+import Destination from '../activities/destination/destinationScreen';
+import SuccessBooking from '../activities/successBooking/successBookingScreen';
 const Tab = createBottomTabNavigator();
 // screens related to the tab bar
 const Tabs = () => {
@@ -32,6 +36,7 @@ const Tabs = () => {
         component={SelectPlanetScreen}
         options={{
           ...navConfig,
+
           tabBarIcon: ({color, size, focused}) => (
             <RocketSvg focused={focused} />
           ),
@@ -42,12 +47,13 @@ const Tabs = () => {
         component={ProfileScreen}
         options={{
           ...navConfig,
+
           tabBarIcon: ({color, size, focused}) => <Profile focused={focused} />,
         }}
       />
       <Tab.Screen
-        name={screenNames.Location_Screen}
-        component={LocationScreen}
+        name={screenNames.TicketView_Screen}
+        component={TicketViewScreen}
         options={{
           ...navConfig,
           tabBarIcon: ({color, size, focused}) => <Place focused={focused} />,

@@ -5,27 +5,43 @@ import {stackNames} from '../constants/navigationConstants/stackNames';
 import Tabs from './tabNavigation';
 import {navConfig} from './navigationConfig';
 import BookingStack from './stacks/bookingStack';
+import SpaceshipsScreen from '../activities/spaceships/spaceshipsScreen';
+import Destination from '../activities/destination/destinationScreen';
 
 const RootStackNav = createNativeStackNavigator();
 
 const RootNavigationStack = () => {
   return (
     <NavigationContainer>
-      <RootStackNav.Navigator initialRouteName={stackNames.AUTH_STACK}>
+      <RootStackNav.Navigator>
         <RootStackNav.Screen
           name={stackNames.AUTH_STACK}
           component={AuthStack}
-          options={navConfig}
+          options={{
+            ...navConfig,
+            animation: 'slide_from_right',
+          }}
         />
+        {/* <RootStackNav.Screen
+          name={'Spaceship'}
+          component={Destination}
+          options={{
+            ...navConfig,
+            animation: 'slide_from_right',
+          }}
+        /> */}
         <RootStackNav.Screen
           name={stackNames.TABS_STACK}
           component={Tabs}
           options={navConfig}
         />
-           <RootStackNav.Screen
+        <RootStackNav.Screen
           name={stackNames.BOOKING_STACK}
           component={BookingStack}
-          options={navConfig}
+          options={{
+            ...navConfig,
+            animation: 'slide_from_right',
+          }}
         />
       </RootStackNav.Navigator>
     </NavigationContainer>

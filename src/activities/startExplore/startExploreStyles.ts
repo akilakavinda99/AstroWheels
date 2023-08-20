@@ -4,13 +4,11 @@ import theme from '../../theme/theme';
 
 export const styles = StyleSheet.create({
   container: {
-    marginLeft: 20,
+    marginHorizontal: '5%',
   },
   mainbox: {},
   box: {
-    marginHorizontal: 20,
-    alignSelf: 'flex-end',
-    elevation: 3,
+    marginHorizontal: '5%',
   },
 
   backgroundImage: {flex: 1, width: '100%', height: '100%'},
@@ -19,30 +17,29 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     height: '40%',
     width: '100%',
-    marginTop: 50,
+    marginTop: '10%',
     resizeMode: 'contain',
   },
   subheader: {
     fontSize: 14,
     fontFamily: theme.fonts.bold,
-    paddingVertical: 8,
-    marginTop: 80,
-    bottom: 5,
+    paddingVertical:'3%',
+    marginTop: '25%',
+    bottom: '2%',
     color: '#9A989A',
   },
   main: {
     fontSize: 24,
     fontFamily: theme.fonts.bold,
-    paddingVertical: 8,
-    bottom: 5,
+    paddingVertical:'3%',
+    bottom: '2%',
     color: '#FFFFFF',
   },
   button: {
     backgroundColor: '#40235E',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
+    paddingVertical:'4%',
     borderRadius: 8,
   },
   textbtn: {
