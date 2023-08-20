@@ -50,13 +50,20 @@ const SpaceshipsScreen = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const getDataa = async () => {
-  //     const data = await addDataToFirebase({reference: 'spaceships/1',data:});
-  //     console.log(data);
-  //   };
-  //   getDataa();
-  // }, []);
+  useEffect(() => {
+    const getDataa = async () => {
+      const data = await getDataFromFirebase({reference: 'planets/1'});
+      //   console.log(data);
+      const spaceShips = data.spaceShips;
+      const selectedDate = '2023-09-02'; // Replace this with the selected date
+
+      const filteredData = spaceShips.filter(
+        item => item.date === selectedDate,
+      );
+      console.log(filteredData);
+    };
+    getDataa();
+  }, []);
 
   //   useEffect(() => {
   //     const seat = [

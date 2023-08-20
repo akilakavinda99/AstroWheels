@@ -14,6 +14,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Button,
+  ScrollView,
 } from 'react-native';
 
 import './destinationStyle';
@@ -41,7 +42,6 @@ export default function Destination() {
     // <View>
     //   <Geology />
     // </View>
-    //   </ImageBackground>
 
     <ImageBackground
       style={styletwo.backgroundImage}
