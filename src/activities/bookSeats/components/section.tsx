@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Seat} from '../types';
 import SvgCompartment from './svgCompartment';
 import SvgCompartmentBooked from './svgCompartmentBooked';
 import SvgCompartmentSelected from './svgCompartmentSelected';
 
 export const PackageSection = (props: any) => {
-  const handleSeatSelection = seat => {
+  const handleSeatSelection = (seat: string | null) => {
     if (props.selectedSeat === seat) {
       seat = null;
     }
@@ -15,18 +15,15 @@ export const PackageSection = (props: any) => {
   };
   return (
     <View
-      style={{
-        position: 'absolute',
-        top: props.top,
-        left: props.left ? props.left : null,
-        width: props.width,
-        height: props.height,
-        gap: 10,
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-      }}>
+      style={[
+        styles.sectionView,
+        {
+          top: props.top,
+          left: props.left ? props.left : null,
+          width: props.width,
+          height: props.height,
+        },
+      ]}>
       {
         // [...Array(12)].map((item, index) => {
         props.seats.map((item: Seat, index: number) => {
@@ -38,7 +35,6 @@ export const PackageSection = (props: any) => {
             item.bookedDates !== undefined &&
             item.bookedDates[props.selectedDate] !== undefined
           ) {
-            console.log('item.bookedDates', item.bookedDates);
             booked = true;
           }
 
@@ -87,3 +83,14 @@ export const PackageSection = (props: any) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  sectionView: {
+    position: 'absolute',
+    gap: 10,
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+});

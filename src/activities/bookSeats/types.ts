@@ -1,5 +1,7 @@
 export interface Seat {
-  bookedDates?: string[];
+  bookedDates?: {
+    [key: string]: string;
+  };
   seatId: number;
 }
 

@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Animated,
+  ToastAndroid,
 } from 'react-native';
 
 import './bookSeatsStyles';
@@ -49,7 +50,10 @@ const BookSeats = () => {
   const [starterSeats, setStarterSeats] = useState<Array<Seat>>([]);
   const [explorerSeats, setExplorerSeats] = useState<Array<Seat>>([]);
   const [pioneerSeats, setPioneerSeats] = useState<Array<Seat>>([]);
-  const [position, setPosition] = useState({x: 0, y: -80});
+  const [position, setPosition] = useState({
+    x: packages[0].x,
+    y: packages[0].y,
+  });
 
   const animatedPosition = new Animated.ValueXY({
     x: packages[0].x,
@@ -90,10 +94,51 @@ const BookSeats = () => {
           }
         });
       });
-    // return () => database().ref(`/spaceships/1 /seat`).off('value', onValueChange);
+    return () => database().ref(`/spaceships/${spaceshipId}/seat`).off();
   }, []);
 
-  const handleBooking = () => {};
+  const handleBooking = async () => {
+    if (activeSeat === null) {
+      // show toast message if no seat is selected
+      ToastAndroid.show('Please select a seat', ToastAndroid.SHORT);
+      return;
+    }
+    // remove prefix from activeSeat
+    const seat = activeSeat?.substring(2);
+    const prefix = activeSeat?.substring(0, 2);
+
+    // get the package
+    const packageid = packages.findIndex(item => item.name === activeScreen);
+    console.log('Booking', prefix, seat, selectedDate, packageid);
+
+    // update bookedDates
+    const seatRef = database().ref(
+      `/spaceships/${spaceshipId}/seat/${packageid}/seats/${seat}`,
+    );
+
+    try {
+      await seatRef.transaction((currentData: Seat) => {
+        if (currentData) {
+          console.log('Booked', currentData);
+
+          if (currentData.bookedDates === undefined) {
+            currentData.bookedDates = {};
+          }
+          if (currentData.bookedDates[selectedDate] === undefined) {
+            currentData.bookedDates[selectedDate] = selectedDate;
+            console.log('Booked', currentData.bookedDates);
+          } else {
+            // show toast message if seat is already booked
+            ToastAndroid.show('Seat is already booked', ToastAndroid.SHORT);
+            return;
+          }
+        }
+        return currentData;
+      });
+    } catch (error) {
+      console.log('Error in seat booking', error);
+    }
+  };
 
   return (
     <ImageBackground

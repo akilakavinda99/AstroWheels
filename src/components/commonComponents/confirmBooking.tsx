@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: SCREEN_WIDTH,
-    height: '25%',
+    height: '30%',
     backgroundColor: '#0D0712',
     paddingHorizontal: 20,
     opacity: 0.8,
