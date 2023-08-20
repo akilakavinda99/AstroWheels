@@ -14,7 +14,7 @@ rocket:{
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: '-9%',
-    marginTop: '-18%'
+    marginTop: '-23%'
 
 },
 rockettext:{
