@@ -6,6 +6,7 @@ import Tabs from './tabNavigation';
 import {navConfig} from './navigationConfig';
 import BookingStack from './stacks/bookingStack';
 import SpaceshipsScreen from '../activities/spaceships/spaceshipsScreen';
+import Destination from '../activities/destination/destinationScreen';
 
 const RootStackNav = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ const RootNavigationStack = () => {
         />
         {/* <RootStackNav.Screen
           name={'Spaceship'}
-          component={SpaceshipsScreen}
+          component={Destination}
           options={{
             ...navConfig,
             animation: 'slide_from_right',
