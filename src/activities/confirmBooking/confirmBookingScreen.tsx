@@ -3,6 +3,7 @@ import Back from '../back/backScreen';
 
 import {style} from './confirmBookingStyle';
 import DetailsCode from './detailsCode';
+import { ConfirmBooking } from '../../components/commonComponents/confirmBooking';
 
 const ConfirmBookingScreen = () => {
   return (
@@ -27,7 +28,15 @@ const ConfirmBookingScreen = () => {
           awaits...
         </Text>
       </View>
+
+     
       </View>
+      <ConfirmBooking
+      title='Final Cost'
+      price='1500'
+      description=''
+      buttonText='Confirm Payment '
+      />
       </ImageBackground>
  
   );

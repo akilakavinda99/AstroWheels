@@ -6,7 +6,7 @@ export const screenNames = {
   Profile_Screen: 'ProfileScreen',
   Settings_Screen: 'SettingsScreen',
   Select_Planet: 'Booking',
-  Location_Screen: 'LocationScreen',
+  TicketView_Screen: 'TicketViewScreen',
 
   Login_Success: 'LoginSuccess',
 

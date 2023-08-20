@@ -14,7 +14,8 @@ export const style = StyleSheet.create({
      resizeMode: 'contain',
      marginLeft: 'auto',
      marginRight: 'auto',
-     zIndex:1
+     zIndex:1,
+     marginTop:'-23%'
   },
   card: {
     backgroundColor: '#20132E',
@@ -112,7 +113,7 @@ export const style = StyleSheet.create({
     resizeMode: 'contain',
   },
   middle: {
-    marginTop:'-14%',
+    marginTop:'-15%',
     backgroundColor: '#190F24',
     borderRadius: 10,
     zindex:3
@@ -128,5 +129,13 @@ export const style = StyleSheet.create({
     color:'#C4B1D8',
     paddingBottom: '3%',
     marginLeft:'7%'
+  },
+  line:{
+    height: 2,
+    backgroundColor: 'white',
+    width: '17%',
+    position: 'absolute',
+    top: '37%',
+    left: '43%'
   }
 });
