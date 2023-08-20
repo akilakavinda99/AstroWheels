@@ -1,9 +1,13 @@
+import React from 'react';
 import {View, Text, StatusBar, ImageBackground, Image} from 'react-native';
 import theme from '../../theme/theme';
 import {AndroidSafeArea} from '../../styles/globalStyles';
-import {styles} from '../profile/ProfileScreenStyles';
+import {styles} from './ProfileScreenStyles';
+import {useAppContext} from '../../context/AppContext';
 
 const ProfileScreen = () => {
+  const {user} = useAppContext();
+
   return (
     <View style={AndroidSafeArea}>
       <StatusBar translucent backgroundColor="transparent" />
@@ -29,7 +33,7 @@ const ProfileScreen = () => {
                   </View>
                   <View style={styles.userInnerTextDetails}>
                     <View style={{flex: 0.4}}>
-                      <Text style={styles.textDetails}>Orion Nova</Text>
+                      <Text style={styles.textDetails}>{user?.name}</Text>
                     </View>
                     <View
                       style={{
@@ -42,7 +46,7 @@ const ProfileScreen = () => {
                           fontFamily: theme.fonts.light,
                           color: theme.colors.secondary.secondary02,
                         }}>
-                        23{' '}
+                        {user?.age}
                       </Text>
                       <Text
                         style={{
@@ -102,7 +106,7 @@ const ProfileScreen = () => {
                         gap: 5,
                       }}>
                       <Text style={[styles.textDetails, {color: '#FFE566'}]}>
-                        2000
+                        {user?.balance}
                       </Text>
                       <Image
                         source={require('../../../assets/images/currency.png')}
