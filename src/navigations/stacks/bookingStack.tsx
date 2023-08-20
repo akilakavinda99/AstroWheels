@@ -6,6 +6,7 @@ import StartExploreScreen from '../../activities/startExplore/startExploreScreen
 import Destination from '../../activities/destination/destinationScreen';
 import ConfirmBookingScreen from '../../activities/confirmBooking/confirmBookingScreen';
 import SuccessBooking from '../../activities/successBooking/successBookingScreen';
+import SpaceshipsScreen from '../../activities/spaceships/spaceshipsScreen';
 // import loginScreen from '../../activities/login/loginScreen';
 
 const BookingStackNav = createNativeStackNavigator();
@@ -31,9 +32,14 @@ const BookingStack = () => {
         component={ConfirmBookingScreen}
         options={navConfig}
       />
-           <BookingStackNav.Screen
+      <BookingStackNav.Screen
         name={screenNames.SuccessBooking_Screen}
         component={SuccessBooking}
+        options={navConfig}
+      />
+      <BookingStackNav.Screen
+        name={screenNames.Spaceship_Screen}
+        component={SpaceshipsScreen}
         options={navConfig}
       />
     </BookingStackNav.Navigator>

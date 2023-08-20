@@ -29,21 +29,27 @@ import Animated, {
   ZoomIn,
 } from 'react-native-reanimated';
 import {Dropdown} from 'react-native-element-dropdown';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import DateSelectionModel from './dateSelectionModel';
+import {useAppContext} from '../../context/AppContext';
 export const Geology = ({navigation}: any) => {
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const data = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
-    {label: 'Item 5', value: '5'},
-    {label: 'Item 6', value: '6'},
-    {label: 'Item 7', value: '7'},
-    {label: 'Item 8', value: '8'},
-  ];
+  const [dropDownData, setDropDownData] = useState([]);
+  const [visibility, setVisbility] = useState(false);
+
+  const {planet} = useAppContext();
+  useEffect(() => {
+    if (planet != null) {
+      console.log('planet', planet);
+      const data = planet.spaceShips.map((item, index) => ({
+        label: item.date,
+        value: item.date,
+      }));
+      setDropDownData(data);
+    }
+  }, [planet]);
+
   const renderLabel = () => {
     if (value || isFocus) {
       return (
@@ -83,15 +89,15 @@ export const Geology = ({navigation}: any) => {
       />
 
       <Text style={style.shiptitle}>Explore Our Space ships</Text>
-      <DateSelectionModel visibility={true} value={value} setValue={setValue} />
+      <DateSelectionModel
+        visibility={visibility}
+        value={value}
+        setValue={setValue}
+        data={dropDownData}
+        navigation={navigation}
+      />
 
-      <Pressable
-        style={style.button}
-        onPress={() =>
-          navigation.navigate(stackNames.BOOKING_STACK, {
-            screen: screenNames.StartExplore_Screen,
-          })
-        }>
+      <Pressable style={style.button} onPress={() => setVisbility(true)}>
         <Text style={style.textbtn}>Book your Vehicle</Text>
       </Pressable>
 

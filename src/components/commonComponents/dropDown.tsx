@@ -14,7 +14,7 @@ import theme from '../../theme/theme';
 //   {label: 'Item 8', value: '8'},
 // ];
 
-const DropdownComponent = ({value, setValue}) => {
+const DropdownComponent = ({value, setValue, setDropDownVal, data}) => {
   //   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -50,6 +50,8 @@ const DropdownComponent = ({value, setValue}) => {
         onBlur={() => setIsFocus(false)}
         onChange={item => {
           setValue(item.value);
+          setDropDownVal(item.value);
+
           setIsFocus(false);
         }}
         // backgroundColor="black"
@@ -94,6 +96,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: 'white',
   },
   selectedTextStyle: {
     fontSize: 16,

@@ -28,10 +28,15 @@ import FeaturesIcon from '../../../assets/svgData/spaceShipScreen/featuresIcon';
 import LinearGradient from 'react-native-linear-gradient';
 import SliderPrevious from '../../../assets/svgData/spaceShipScreen/sliderPreviousIcon';
 import SliderNext from '../../../assets/svgData/spaceShipScreen/sliderNextIcon';
+import {useAppContext} from '../../context/AppContext';
 const SpaceshipsScreen = () => {
   const carouselRef = useRef(null);
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
+  const {planet, date, setSpaceShip} = useAppContext();
+  const [spaceShips, setSpaceShips] = React.useState([]);
+  const [carouselData, setCarousalData] = React.useState([]);
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
   const handlePrevSlide = () => {
     if (carouselRef.current) {
@@ -51,19 +56,32 @@ const SpaceshipsScreen = () => {
   };
 
   useEffect(() => {
-    const getDataa = async () => {
-      const data = await getDataFromFirebase({reference: 'planets/1'});
-      //   console.log(data);
-      const spaceShips = data.spaceShips;
-      const selectedDate = '2023-09-02'; // Replace this with the selected date
-
-      const filteredData = spaceShips.filter(
-        item => item.date === selectedDate,
-      );
-      console.log(filteredData);
+    const getIds = async () => {
+      const spaceShips = planet.spaceShips;
+      const filteredData = await spaceShips.filter(item => item.date === date);
+      console.log('Filter', filteredData);
+      setSpaceShips(filteredData[0].ids);
     };
-    getDataa();
+    getIds();
   }, []);
+
+  useEffect(() => {
+    if (spaceShips.length != 0) {
+      const getSpaceShips = async () => {
+        const data = await getDataFromFirebase({reference: 'spaceships/'});
+        console.log('asasasas', data);
+        const objectsFromIndexes = spaceShips
+          .map(index => {
+            const key = index.toString(); // Convert the index to a string to access the object in the mainObject
+            return data[key] || null;
+          })
+          .filter(obj => obj !== undefined && obj !== null);
+        console.log('wsdsd', objectsFromIndexes);
+        setCarousalData(objectsFromIndexes);
+      };
+      getSpaceShips();
+    }
+  }, [spaceShips]);
 
   //   useEffect(() => {
   //     const seat = [
@@ -87,6 +105,10 @@ const SpaceshipsScreen = () => {
   //     getDataa();
   //   }, []);
 
+  const onPressBook = () => {
+    setSpaceShip(carouselData[currentIndex]);
+  };
+
   return (
     <ImageBackground
       source={require('../../../assets/images/Background.png')}
@@ -99,20 +121,22 @@ const SpaceshipsScreen = () => {
         <Carousel
           // mode=''
           ref={carouselRef}
-          loop
           width={width}
           height={height}
           autoPlay={false}
-          data={[...new Array(6).keys()]}
+          loop={false}
+          data={carouselData}
           scrollAnimationDuration={1000}
           onScrollEnd={index => console.log('scroll end', index)}
-          onSnapToItem={index => console.log('current index:', index)}
-          renderItem={({index}) => (
+          onSnapToItem={index => setCurrentIndex(index)}
+          renderItem={({index, item}) => (
             <View style={styles.mainContainer}>
               <View style={styles.spaceShipRow}>
                 <View>
                   <Image
-                    source={require('../../../s3.png')}
+                    source={{
+                      uri: item.image,
+                    }}
                     style={styles.spaceShipImage}
                     resizeMode="cover"
                   />
@@ -132,7 +156,7 @@ const SpaceshipsScreen = () => {
               </View>
               <View style={styles.headingView}>
                 <View>
-                  <Text style={styles.headingText}>Quantum Glidecraft</Text>
+                  <Text style={styles.headingText}>{item.name}</Text>
                 </View>
                 <View style={styles.arIcon}>
                   <ArIcon />
@@ -145,10 +169,7 @@ const SpaceshipsScreen = () => {
                       <Text style={styles.detailsHeaderText}>Design</Text>
                       <DesignIcon />
                     </View>
-                    <Text style={styles.detailsDescription}>
-                      Compact, streamlined craft with a quantum entanglement
-                      propulsion system.
-                    </Text>
+                    <Text style={styles.detailsDescription}>{item.design}</Text>
                     {/* <Text>Quantum Glidecraft</Text>
                   <Text>Quantum Glidecraft</Text> */}
                   </View>
@@ -158,8 +179,7 @@ const SpaceshipsScreen = () => {
                       <PropulsionIcon />
                     </View>
                     <Text style={styles.detailsDescription}>
-                      Compact, streamlined craft with a quantum entanglement
-                      propulsion system.
+                      {item.propulsion}
                     </Text>
                     {/* <Text>Quantum Glidecraft</Text>
                   <Text>Quantum Glidecraft</Text> */}
@@ -172,8 +192,7 @@ const SpaceshipsScreen = () => {
                       <InteriorIcon />
                     </View>
                     <Text style={styles.detailsDescription}>
-                      Compact, streamlined craft with a quantum entanglement
-                      propulsion system.
+                      {item.interior}
                     </Text>
                     {/* <Text>Quantum Glidecraft</Text>
                   <Text>Quantum Glidecraft</Text> */}
@@ -184,8 +203,7 @@ const SpaceshipsScreen = () => {
                       <FeaturesIcon />
                     </View>
                     <Text style={styles.detailsDescription}>
-                      Compact, streamlined craft with a quantum entanglement
-                      propulsion system.
+                      {item.features}
                     </Text>
                     {/* <Text>Quantum Glidecraft</Text>
                   <Text>Quantum Glidecraft</Text> */}
@@ -229,7 +247,8 @@ const SpaceshipsScreen = () => {
                 width: 150,
               }}
               activeOpacity={0.9}
-              underlayColor={theme.colors.primary.primary600}>
+              underlayColor={theme.colors.primary.primary600}
+              onPress={onPressBook}>
               <Text
                 style={{
                   backgroundColor: 'transparent',

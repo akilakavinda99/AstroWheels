@@ -22,7 +22,7 @@ export const ExplorationHub = ({navigation}: any) => {
     <View>
       <Text style={styletwo.maintitle}>Specifications</Text>
 
-      {/* <FlatList
+      <FlatList
         data={planet.places}
         renderItem={details => {
           console.log('dsds', details);
@@ -36,7 +36,7 @@ export const ExplorationHub = ({navigation}: any) => {
             </View>
           );
         }}
-      /> */}
+      />
 
       {/* <View style={styletwo.topsectiontwo}>
         <DestinationContent

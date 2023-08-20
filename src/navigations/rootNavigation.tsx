@@ -14,23 +14,23 @@ const RootNavigationStack = () => {
   return (
     <NavigationContainer>
       <RootStackNav.Navigator>
-        {/* <RootStackNav.Screen
+        <RootStackNav.Screen
           name={stackNames.AUTH_STACK}
           component={AuthStack}
           options={{
             ...navConfig,
             animation: 'slide_from_right',
           }}
-        /> */}
-        <RootStackNav.Screen
+        />
+        {/* <RootStackNav.Screen
           name={'Spaceship'}
           component={Destination}
           options={{
             ...navConfig,
             animation: 'slide_from_right',
           }}
-        />
-        {/* <RootStackNav.Screen
+        /> */}
+        <RootStackNav.Screen
           name={stackNames.TABS_STACK}
           component={Tabs}
           options={navConfig}
@@ -42,7 +42,7 @@ const RootNavigationStack = () => {
             ...navConfig,
             animation: 'slide_from_right',
           }}
-        /> */}
+        />
       </RootStackNav.Navigator>
     </NavigationContainer>
   );
