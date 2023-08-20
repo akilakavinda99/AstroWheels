@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import {
   ViroARScene,
   ViroText,
@@ -21,21 +14,20 @@ import {
   ViroQuad,
   ViroAnimations,
 } from '@viro-community/react-viro';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import RootNavigationStack from './src/navigations/rootNavigation';
-import {AppProvider} from './src/context/AppContext';
-import {StyleSheet} from 'react-native';
-import RNBootSplash from 'react-native-bootsplash';
+import {StyleSheet, View} from 'react-native';
+import Back from '../back/backScreen';
+import {useAppContext} from '../../context/AppContext';
+
 const HelloWorldSceneAR = () => {
+  const {spaceShip} = useAppContext();
+  console.log('spaceShip', spaceShip);
   const [text, setText] = useState('Initializing AR...');
 
   function onInitialized(state, reason) {
     console.log('guncelleme', state, reason);
     if (state === ViroTrackingStateConstants.TRACKING_NORMAL) {
-      setText('SP-2345 GUNTRACER');
+      setText(spaceShip.name);
     } else if (state === ViroTrackingStateConstants.TRACKING_NONE) {
       // Handle loss of tracking
     }
@@ -69,7 +61,7 @@ const HelloWorldSceneAR = () => {
             console.log('dfsffsd');
           }}>
           {/* Spotlight to cast light on the object and a shadow on the surface, see
-              the Viro documentation for more info on lights & shadows */}
+                the Viro documentation for more info on lights & shadows */}
           <ViroSpotLight
             innerAngle={5}
             outerAngle={45}
@@ -84,7 +76,11 @@ const HelloWorldSceneAR = () => {
             shadowOpacity={0.7}
           />
           <Viro3DObject
-            source={require('./er.glb')}
+            source={
+              spaceShip.spaceshipId == 1
+                ? require('../../../er.glb')
+                : require('../../../rs.glb')
+            }
             position={[0, 0, -1]}
             scale={[0.05, 0.05, 0.05]}
             type="GLB"
@@ -118,45 +114,44 @@ const HelloWorldSceneAR = () => {
       </ViroNode>
 
       {/* <ViroNode position={[0, 0, -1]} dragType="FixedToWorld" onDrag={() => { }} >
-        <Viro3DObject
-          source={require('./emoji_smile.vrx')}
-          position={[0, .1, 0]}
-          scale={[.2, .2, .2]}
-          type="VRX"
-        />
-      </ViroNode> */}
+          <Viro3DObject
+            source={require('./emoji_smile.vrx')}
+            position={[0, .1, 0]}
+            scale={[.2, .2, .2]}
+            type="VRX"
+          />
+        </ViroNode> */}
     </ViroARScene>
   );
 };
 
-// <ViroARSceneNavigator
-//   autofocus={true}
-//   initialScene={{
-//     scene: HelloWorldSceneAR,
-//   }}
-//   style={{
-//     flex: 1,
-//   }}></ViroARSceneNavigator>
-
-function App() {
+const ArScreen = ({route}) => {
+  //   const {text} = route.params;
+  const [textStr, setText] = useState('Initializing AR...');
   useEffect(() => {
-    RNBootSplash.hide({fade: true, duration: 500});
-  }, []);
-
+    console.log('text', textStr);
+    setText(route.params.text);
+  }, [route.params]);
   return (
-    <AppProvider>
-      {/* <ViroARSceneNavigator
+    <View
+      style={{
+        flex: 1,
+      }}>
+      <Back />
+      <ViroARSceneNavigator
         autofocus={true}
         initialScene={{
           scene: HelloWorldSceneAR,
         }}
         style={{
           flex: 1,
-        }}></ViroARSceneNavigator> */}
-      <RootNavigationStack />
-    </AppProvider>
+        }}></ViroARSceneNavigator>
+    </View>
   );
-}
+};
+
+export default ArScreen;
+
 var styles = StyleSheet.create({
   f1: {flex: 1},
   helloWorldTextStyle: {
@@ -168,5 +163,3 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default App;

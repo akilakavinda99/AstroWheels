@@ -34,6 +34,7 @@ import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 
 const SpaceshipsScreen = () => {
+  const navigation = useNavigation();
   const carouselRef = useRef(null);
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
@@ -48,8 +49,9 @@ const SpaceshipsScreen = () => {
     if (carouselRef.current) {
       console.log(carouselRef.current.getCurrentIndex());
       carouselRef.current.scrollTo({
-        index: 3,
+        index: carouselRef.current.getCurrentIndex() - 1,
       });
+      setSpaceShip(carouselData[carouselRef.current.getCurrentIndex() - 1]);
     }
   };
 
@@ -58,6 +60,7 @@ const SpaceshipsScreen = () => {
       carouselRef.current.scrollTo({
         index: carouselRef.current.getCurrentIndex() + 1,
       });
+      setSpaceShip(carouselData[carouselRef.current.getCurrentIndex() + 1]);
     }
   };
 
@@ -70,6 +73,12 @@ const SpaceshipsScreen = () => {
     };
     getIds();
   }, []);
+
+  useEffect(() => {
+    setSpaceShip(carouselData[currentIndex]);
+  }, [carouselData]);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (spaceShips.length != 0) {
@@ -136,8 +145,15 @@ const SpaceshipsScreen = () => {
           loop={false}
           data={carouselData}
           scrollAnimationDuration={1000}
-          onScrollEnd={index => console.log('scroll end', index)}
-          onSnapToItem={index => setCurrentIndex(index)}
+          onScrollEnd={index => {
+            console.log('index in scroll', index);
+            setSpaceShip(carouselData[index]);
+          }}
+          onSnapToItem={index => {
+            setCurrentIndex(index);
+            console.log('index in snap', index);
+            setSpaceShip(carouselData[index]);
+          }}
           renderItem={({index, item}) => (
             <View style={styles.mainContainer}>
               <View style={styles.spaceShipRow}>
@@ -167,9 +183,29 @@ const SpaceshipsScreen = () => {
                 <View>
                   <Text style={styles.headingText}>{item.name}</Text>
                 </View>
-                <View style={styles.arIcon}>
-                  <ArIcon />
-                </View>
+                <TouchableHighlight
+                  onPress={() => {
+                    navigation.navigate(stackNames.BOOKING_STACK, {
+                      screen: screenNames.Ar_Screen,
+                      params: {
+                        text: 'hello',
+                      },
+                    });
+                  }}>
+                  <View style={styles.arIcon}>
+                    <ArIcon />
+                  </View>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  onPress={() => {
+                    navigation.navigate(stackNames.BOOKING_STACK, {
+                      screen: screenNames.Web_View,
+                    });
+                  }}>
+                  <View style={styles.arIcon}>
+                    <ArIcon />
+                  </View>
+                </TouchableHighlight>
               </View>
               <View style={styles.detailsContainer}>
                 <View style={styles.detailsFirstRow}>

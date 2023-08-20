@@ -16,4 +16,6 @@ export const screenNames = {
   SuccessBooking_Screen: 'SuccessBookingScreen',
   Spaceship_Screen: 'Spaceship_Screen',
   SeatSelection_Screen: 'SeatSelectionScreen',
+  Ar_Screen: 'Ar_Screen',
+  Web_View: 'Web_View',
 };
