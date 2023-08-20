@@ -1,55 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import database from '@react-native-firebase/database';
 
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
   TouchableOpacity,
   Animated,
-  Dimensions,
 } from 'react-native';
 
 import './bookSeatsStyles';
-import { bookingStyles } from './bookSeatsStyles';
+import {bookingStyles} from './bookSeatsStyles';
 import Back from '../back/backScreen';
 import SvgSpaceship from './components/svgSpaceship';
 import SvgSpaceshipIn from './components/svgSpaceshipIn';
-import { PackageSection } from './components/section';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+import {PackageSection} from './components/section';
+import {Seat, SeatPackage} from './types';
+import {ConfirmBooking} from '../../components/commonComponents/confirmBooking';
+import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../styles/globalStyles';
+import {confirmBookingData} from './bookingScreenData';
 
 const packages = [
   {
     name: 'Starter',
     x: 0,
-    y: 0,
-    zoom: "145%",
+    y: -80,
+    zoom: '145%',
   },
   {
     name: 'Explorer',
-    x: (SCREEN_WIDTH) / 5,
+    x: SCREEN_WIDTH / 5,
     y: (-SCREEN_HEIGHT * 2) / 5,
-    zoom: "200%",
+    zoom: '200%',
   },
   {
     name: 'Pioneer',
     x: -SCREEN_WIDTH / 5,
     y: (-SCREEN_HEIGHT * 2) / 5,
-    zoom: "200%",
+    zoom: '200%',
   },
 ];
 
 const BookSeats = () => {
-  const selectedDate = '2023-09-29';
+  const selectedDate = '2023-09-30';
+  const spaceshipId = 1;
   const [activeScreen, setActiveScreen] = useState('Starter');
-  const [activeSeat, setActiveSeat] = useState('st5'); // [prefix][index]
-  const [starterSeats, setStarterSeats] = useState([]);
-  const [explorerSeats, setExplorerSeats] = useState([]);
-  const [pioneerSeats, setPioneerSeats] = useState([]);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [activeSeat, setActiveSeat] = useState<String | null>(null); // [prefix][index]
+  const [starterSeats, setStarterSeats] = useState<Array<Seat>>([]);
+  const [explorerSeats, setExplorerSeats] = useState<Array<Seat>>([]);
+  const [pioneerSeats, setPioneerSeats] = useState<Array<Seat>>([]);
+  const [position, setPosition] = useState({x: 0, y: -80});
+
   const animatedPosition = new Animated.ValueXY({
     x: packages[0].x,
     y: packages[0].y,
@@ -63,7 +64,8 @@ const BookSeats = () => {
     //   useNativeDriver: false,
     // }).start(()=> setPosition({ x, y }) );
 
-    setPosition({ x, y });
+    setActiveSeat(null);
+    setPosition({x, y});
     setActiveScreen(screen);
   };
 
@@ -73,29 +75,31 @@ const BookSeats = () => {
 
   useEffect(() => {
     database()
-      .ref('/spaceships/1/seat')
+      .ref(`/spaceships/${spaceshipId}/seat`)
       .on('value', snapshot => {
-        console.log('Data changed: ', snapshot.val());
+        console.log('Data changed in firebase');
         const arr = snapshot.val();
 
-        arr.forEach((item, index: number) => {
+        arr.forEach((item: SeatPackage) => {
           if (item.packageId === 1) {
-            setStarterSeats(arr[index].seats);
+            setStarterSeats(item.seats);
           } else if (item.packageId === 2) {
-            setExplorerSeats(arr[index].seats);
+            setExplorerSeats(item.seats);
           } else if (item.packageId === 3) {
-            setPioneerSeats(arr[index].seats);
+            setPioneerSeats(item.seats);
           }
         });
       });
     // return () => database().ref(`/spaceships/1 /seat`).off('value', onValueChange);
   }, []);
 
+  const handleBooking = () => {};
+
   return (
     <ImageBackground
       style={bookingStyles.backgroundImage}
       source={require('../../../assets/images/Background.png')}>
-      <View style={{ flex: 1, marginLeft: 20, marginRight: 20 }}>
+      <View style={{flex: 1, marginLeft: 20, marginRight: 20}}>
         <Back title="Vehicle Selection" />
 
         <View style={bookingStyles.buttonContainer}>
@@ -116,73 +120,105 @@ const BookSeats = () => {
 
         {/* {renderActiveScreen()} */}
         <Animated.View
-          style={[bookingStyles.animatedView, {
-            top: position.y,
-            left: position.x,
-          }]}>
-          <View style={[bookingStyles.spaceship, {
-            width: packages.find(item => item.name === activeScreen)?.zoom,
-            height: packages.find(item => item.name === activeScreen)?.zoom,
-          }]}>
+          style={[
+            bookingStyles.animatedView,
+            {
+              top: position.y,
+              left: position.x,
+            },
+          ]}>
+          <View
+            style={[
+              bookingStyles.spaceship,
+              {
+                width: packages.find(item => item.name === activeScreen)?.zoom,
+                height: packages.find(item => item.name === activeScreen)?.zoom,
+              },
+            ]}>
             <SvgSpaceship
               style={{
-                position: 'absolute'
+                position: 'absolute',
               }}
             />
           </View>
-          <View style={[bookingStyles.spaceship, {
-            width: packages.find(item => item.name === activeScreen)?.zoom,
-            height: packages.find(item => item.name === activeScreen)?.zoom,
-          }]}>
+          <View
+            style={[
+              bookingStyles.spaceship,
+              {
+                width: packages.find(item => item.name === activeScreen)?.zoom,
+                height: packages.find(item => item.name === activeScreen)?.zoom,
+              },
+            ]}>
             <SvgSpaceshipIn
               style={{
-                position: 'absolute'
+                position: 'absolute',
               }}
             />
           </View>
 
-          <PackageSection
-            top={'20%'}
-            width={'75%'}
-            height={'75%'}
-            compartmentWidth={'20%'}
-            compartmentHeight={'20%'}
-            prefix={'st'}
-            seats={starterSeats}
-            selectedDate={selectedDate}
-            selectedSeat={activeSeat}
-            selectSeat={setActiveSeat}
-          />
-          <PackageSection
-            top={'80%'}
-            left={'0%'}
-            width={'50%'}
-            height={'75%'}
-            compartmentWidth={'22%'}
-            compartmentHeight={'15%'}
-            prefix={'ex'}
-            seats={explorerSeats}
-            selectedDate={selectedDate}
-            selectedSeat={activeSeat}
-            selectSeat={setActiveSeat}
-          />
-          <PackageSection
-            top={'80%'}
-            left={'50%'}
-            width={'50%'}
-            height={'75%'}
-            compartmentWidth={'22%'}
-            compartmentHeight={'15%'}
-            prefix={'pi'}
-            seats={pioneerSeats}
-            selectedDate={selectedDate}
-            selectedSeat={activeSeat}
-            selectSeat={setActiveSeat}
-          />
-
-          {/* <Text style={{ backgroundColor: 'red' }}>Hello</Text> */}
+          {activeScreen === 'Starter' ? (
+            <PackageSection
+              top={'25%'}
+              width={'75%'}
+              height={'75%'}
+              compartmentWidth={'20%'}
+              compartmentHeight={'20%'}
+              prefix={'st'}
+              seats={starterSeats}
+              selectedDate={selectedDate}
+              selectedSeat={activeSeat}
+              selectSeat={setActiveSeat}
+            />
+          ) : activeScreen === 'Explorer' ? (
+            <PackageSection
+              top={'60%'}
+              left={'0%'}
+              width={'75%'}
+              height={'75%'}
+              compartmentWidth={'22%'}
+              compartmentHeight={'15%'}
+              prefix={'ex'}
+              seats={explorerSeats}
+              selectedDate={selectedDate}
+              selectedSeat={activeSeat}
+              selectSeat={setActiveSeat}
+            />
+          ) : (
+            <PackageSection
+              top={'60%'}
+              left={'30%'}
+              width={'75%'}
+              height={'75%'}
+              compartmentWidth={'22%'}
+              compartmentHeight={'15%'}
+              prefix={'pi'}
+              seats={pioneerSeats}
+              selectedDate={selectedDate}
+              selectedSeat={activeSeat}
+              selectSeat={setActiveSeat}
+            />
+          )}
         </Animated.View>
       </View>
+      <ConfirmBooking
+        title={
+          confirmBookingData[activeScreen as keyof typeof confirmBookingData]
+            .title
+        }
+        price={
+          confirmBookingData[activeScreen as keyof typeof confirmBookingData]
+            .price
+        }
+        description={
+          confirmBookingData[activeScreen as keyof typeof confirmBookingData]
+            .description
+        }
+        buttonText={
+          confirmBookingData[activeScreen as keyof typeof confirmBookingData]
+            .button
+        }
+        buttonOnPress={handleBooking}
+      />
     </ImageBackground>
   );
 };
