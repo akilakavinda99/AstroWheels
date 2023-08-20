@@ -94,7 +94,7 @@ export const Geology = ({navigation}: any) => {
         value={value}
         setValue={setValue}
         data={dropDownData}
-        navigation={navigation}
+        changeVisibility={setVisbility}
       />
 
       <Pressable style={style.button} onPress={() => setVisbility(true)}>

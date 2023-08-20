@@ -21,7 +21,11 @@ const DropdownComponent = ({value, setValue, setDropDownVal, data}) => {
   const renderLabel = () => {
     if (value || isFocus) {
       return (
-        <Text style={[styles.label, isFocus && {color: 'blue'}]}>
+        <Text
+          style={[
+            styles.label,
+            isFocus && {color: theme.colors.primary.primary},
+          ]}>
           Dropdown label
         </Text>
       );
@@ -33,7 +37,10 @@ const DropdownComponent = ({value, setValue, setDropDownVal, data}) => {
     <View style={styles.container}>
       {/* {renderLabel()} */}
       <Dropdown
-        style={[styles.dropdown, isFocus && {borderColor: 'blue'}]}
+        style={[
+          styles.dropdown,
+          isFocus && {borderColor: theme.colors.primary.primary},
+        ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
@@ -57,7 +64,7 @@ const DropdownComponent = ({value, setValue, setDropDownVal, data}) => {
         // backgroundColor="black"
         itemContainerStyle={{
           backgroundColor: theme.colors.primary.primary950,
-          borderColor: 'black',
+          borderColor: theme.colors.primary.primary,
         }}
         itemTextStyle={{
           color: 'white',

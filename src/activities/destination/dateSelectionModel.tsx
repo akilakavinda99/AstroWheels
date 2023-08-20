@@ -10,13 +10,20 @@ import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {useAppContext} from '../../context/AppContext';
 import {useNavigation} from '@react-navigation/native';
 
-const DateSelectionModel = ({visibility, value, setValue, data}) => {
+const DateSelectionModel = ({
+  visibility,
+  changeVisibility,
+  value,
+  setValue,
+  data,
+}) => {
   const [dropDownval, setDropDownVal] = useState(null);
   const {setDate} = useAppContext();
   const navigation = useNavigation();
   const exploreFunction = () => {
     if (dropDownval != null) {
       console.log('Explore function called');
+      changeVisibility(false);
       setDate(dropDownval);
       navigation.navigate(stackNames.BOOKING_STACK, {
         screen: screenNames.Spaceship_Screen,
@@ -24,7 +31,12 @@ const DateSelectionModel = ({visibility, value, setValue, data}) => {
     }
   };
   return (
-    <Modal isVisible={visibility}>
+    <Modal
+      isVisible={visibility}
+      backdropOpacity={0.75}
+      onBackdropPress={() => {
+        changeVisibility(false);
+      }}>
       <View style={{}}>
         <Text
           style={{

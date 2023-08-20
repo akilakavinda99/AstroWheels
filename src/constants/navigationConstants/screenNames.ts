@@ -3,10 +3,10 @@ export const screenNames = {
   Login_ID_Screen: 'LoginId',
   Register_Screen: 'RegisterScreen',
   Home_Screen: 'HomeScreen',
-  Profile_Screen: 'ProfileScreen',
-  Settings_Screen: 'SettingsScreen',
+  Profile_Screen: 'Profile',
+  Settings_Screen: 'Settings',
   Select_Planet: 'Booking',
-  TicketView_Screen: 'TicketViewScreen',
+  TicketView_Screen: 'Tickets',
 
   Login_Success: 'LoginSuccess',
 

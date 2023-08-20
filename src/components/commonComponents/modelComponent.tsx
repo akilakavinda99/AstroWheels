@@ -65,7 +65,7 @@ const SignUpModelComponent = ({
             value={2}
           />
           <ModelButton
-            text={'User 2'}
+            text={'User 3'}
             onPress={val => {
               buttonFunction(val);
               onBackdropPress();

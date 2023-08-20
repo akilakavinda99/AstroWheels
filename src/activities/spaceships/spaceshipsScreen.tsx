@@ -34,7 +34,6 @@ import {screenNames} from '../../constants/navigationConstants/screenNames';
 import {stackNames} from '../../constants/navigationConstants/stackNames';
 
 const SpaceshipsScreen = () => {
-  const navigation = useNavigation();
   const carouselRef = useRef(null);
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
