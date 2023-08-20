@@ -20,6 +20,11 @@ import {Seat, SeatPackage} from './types';
 import {ConfirmBooking} from '../../components/commonComponents/confirmBooking';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../../styles/globalStyles';
 import {confirmBookingData} from './bookingScreenData';
+import {useAppContext} from '../../context/AppContext';
+import {useNavigation} from '@react-navigation/native';
+import {stackNames} from '../../constants/navigationConstants/stackNames';
+import {screenNames} from '../../constants/navigationConstants/screenNames';
+import {showShortToast} from '../../utiils/showToast';
 
 const packages = [
   {
@@ -32,24 +37,35 @@ const packages = [
     name: 'Explorer',
     x: SCREEN_WIDTH / 5,
     y: (-SCREEN_HEIGHT * 2) / 5,
-    zoom: '200%',
+    zoom: '175%',
   },
   {
     name: 'Pioneer',
     x: -SCREEN_WIDTH / 5,
     y: (-SCREEN_HEIGHT * 2) / 5,
-    zoom: '200%',
+    zoom: '175%',
   },
 ];
 
 const BookSeats = () => {
-  const selectedDate = '2023-09-30';
-  const spaceshipId = 1;
+  // const selectedDate = '2023-09-30';
+  // const spaceshipId = 1;
+  const {user, date, spaceShip} = useAppContext();
+  const navigation = useNavigation();
+
   const [activeScreen, setActiveScreen] = useState('Starter');
-  const [activeSeat, setActiveSeat] = useState<String | null>(null); // [prefix][index]
+  const [activeSeat, setActiveSeat] = useState<string | null>(null); // [prefix][index]
+
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [spaceshipId, setSpaceshipId] = useState<number | null>(null);
+  const [accountBalance, setAccountBalance] = useState<number | null>(null);
+  const [price, setPrice] = useState<number | null>(null);
+
   const [starterSeats, setStarterSeats] = useState<Array<Seat>>([]);
   const [explorerSeats, setExplorerSeats] = useState<Array<Seat>>([]);
   const [pioneerSeats, setPioneerSeats] = useState<Array<Seat>>([]);
+
   const [position, setPosition] = useState({
     x: packages[0].x,
     y: packages[0].y,
@@ -59,6 +75,30 @@ const BookSeats = () => {
     x: packages[0].x,
     y: packages[0].y,
   });
+
+  useEffect(() => {
+    if (date != null) {
+      setSelectedDate(date);
+    }
+  }, [date]);
+
+  useEffect(() => {
+    if (spaceShip != null && spaceShip.spaceshipId != null) {
+      setSpaceshipId(spaceShip.spaceshipId);
+    }
+  }, [spaceShip]);
+
+  useEffect(() => {
+    if (user != null && user.galacticId != null) {
+      setUserId(user.galacticId);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    setPrice(
+      confirmBookingData[activeScreen as keyof typeof confirmBookingData].price,
+    );
+  }, [activeScreen]);
 
   const moveComponent = (screen: string, x: number, y: number) => {
     console.log(screen, 'selected');
@@ -77,63 +117,124 @@ const BookSeats = () => {
   //   moveComponent();
   // }, [activeScreen]);
 
+  // listen to firebase changes on seats of the selected spaceship
   useEffect(() => {
-    database()
-      .ref(`/spaceships/${spaceshipId}/seat`)
-      .on('value', snapshot => {
-        console.log('Data changed in firebase');
-        const arr = snapshot.val();
+    if (spaceshipId !== null) {
+      database()
+        .ref(`/spaceships/${spaceshipId}/seat`)
+        .on('value', snapshot => {
+          console.log('Data changed in firebase');
+          const arr = snapshot.val();
 
-        arr.forEach((item: SeatPackage) => {
-          if (item.packageId === 1) {
-            setStarterSeats(item.seats);
-          } else if (item.packageId === 2) {
-            setExplorerSeats(item.seats);
-          } else if (item.packageId === 3) {
-            setPioneerSeats(item.seats);
-          }
+          arr.forEach((item: SeatPackage) => {
+            if (item.packageId === 1) {
+              setStarterSeats(item.seats);
+            } else if (item.packageId === 2) {
+              setExplorerSeats(item.seats);
+            } else if (item.packageId === 3) {
+              setPioneerSeats(item.seats);
+            }
+          });
         });
-      });
+    }
+
     return () => database().ref(`/spaceships/${spaceshipId}/seat`).off();
-  }, []);
+  }, [spaceshipId]);
+
+  useEffect(() => {
+    if (userId !== null) {
+      database()
+        .ref(`/users/${userId}/balance`)
+        .on('value', snapshot => {
+          console.log('Account balance changed');
+          const balance = snapshot.val();
+          setAccountBalance(balance);
+        });
+    }
+
+    return () => database().ref(`/users/${userId}/balance`).off();
+  }, [userId]);
 
   const handleBooking = async () => {
-    if (activeSeat === null) {
-      // show toast message if no seat is selected
-      ToastAndroid.show('Please select a seat', ToastAndroid.SHORT);
+    // show toast message if there is any error
+    if (userId === null) {
+      showShortToast('Please login to book a seat');
+      return;
+    } else if (spaceshipId === null) {
+      showShortToast('Please select a spaceship');
+      return;
+    } else if (selectedDate === null) {
+      showShortToast('Please select a date');
+      return;
+    } else if (activeSeat === null) {
+      showShortToast('Please select a seat');
+      return;
+    } else if (
+      accountBalance === null ||
+      price === null ||
+      accountBalance < price
+    ) {
+      ToastAndroid.show('Insufficient balance', ToastAndroid.SHORT);
       return;
     }
+
     // remove prefix from activeSeat
     const seat = activeSeat?.substring(2);
-    const prefix = activeSeat?.substring(0, 2);
 
     // get the package
     const packageid = packages.findIndex(item => item.name === activeScreen);
-    console.log('Booking', prefix, seat, selectedDate, packageid);
 
     // update bookedDates
     const seatRef = database().ref(
       `/spaceships/${spaceshipId}/seat/${packageid}/seats/${seat}`,
     );
+    const userRef = database().ref(`/users/${userId}`);
 
     try {
       await seatRef.transaction((currentData: Seat) => {
         if (currentData) {
-          console.log('Booked', currentData);
-
           if (currentData.bookedDates === undefined) {
             currentData.bookedDates = {};
           }
           if (currentData.bookedDates[selectedDate] === undefined) {
             currentData.bookedDates[selectedDate] = selectedDate;
+
             console.log('Booked', currentData.bookedDates);
+            setActiveSeat(null);
+
+            // navigate to success screen
+            navigation.navigate(stackNames.BOOKING_STACK, {
+              screen: screenNames.SuccessBooking_Screen,
+            });
           } else {
             // show toast message if seat is already booked
-            ToastAndroid.show('Seat is already booked', ToastAndroid.SHORT);
+            showShortToast('Seat is already booked');
             return;
           }
         }
         return currentData;
+      });
+
+      // update user balance and bookings
+      await userRef.transaction((userData: any) => {
+        if (userData) {
+          if (userData.balance) {
+            userData.balance = userData.balance - price;
+          }
+          if (userData.bookings === undefined) {
+            userData.bookings = [];
+          }
+
+          userData.bookings.push({
+            date: selectedDate,
+            seat: activeSeat,
+            spaceshipId: spaceshipId,
+            packageId: packageid,
+            price: price,
+          });
+        }
+
+        return userData;
       });
     } catch (error) {
       console.log('Error in seat booking', error);
@@ -180,11 +281,7 @@ const BookSeats = () => {
                 height: packages.find(item => item.name === activeScreen)?.zoom,
               },
             ]}>
-            <SvgSpaceship
-              style={{
-                position: 'absolute',
-              }}
-            />
+            <SvgSpaceship style={bookingStyles.absoluteView} />
           </View>
           <View
             style={[
@@ -194,11 +291,7 @@ const BookSeats = () => {
                 height: packages.find(item => item.name === activeScreen)?.zoom,
               },
             ]}>
-            <SvgSpaceshipIn
-              style={{
-                position: 'absolute',
-              }}
-            />
+            <SvgSpaceshipIn style={bookingStyles.absoluteView} />
           </View>
 
           {activeScreen === 'Starter' ? (
@@ -262,6 +355,7 @@ const BookSeats = () => {
           confirmBookingData[activeScreen as keyof typeof confirmBookingData]
             .button
         }
+        availableBalance={accountBalance}
         buttonOnPress={handleBooking}
       />
     </ImageBackground>

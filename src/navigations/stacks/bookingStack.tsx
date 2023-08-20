@@ -1,3 +1,4 @@
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import LoginScreen from '../../activities/login/loginScreen';
 import {screenNames} from '../../constants/navigationConstants/screenNames';
@@ -7,6 +8,7 @@ import Destination from '../../activities/destination/destinationScreen';
 import ConfirmBookingScreen from '../../activities/confirmBooking/confirmBookingScreen';
 import SuccessBooking from '../../activities/successBooking/successBookingScreen';
 import SpaceshipsScreen from '../../activities/spaceships/spaceshipsScreen';
+import BookSeats from '../../activities/bookSeats/bookSeats';
 // import loginScreen from '../../activities/login/loginScreen';
 
 const BookingStackNav = createNativeStackNavigator();
@@ -40,6 +42,11 @@ const BookingStack = () => {
       <BookingStackNav.Screen
         name={screenNames.Spaceship_Screen}
         component={SpaceshipsScreen}
+        options={navConfig}
+      />
+      <BookingStackNav.Screen
+        name={screenNames.SeatSelection_Screen}
+        component={BookSeats}
         options={navConfig}
       />
     </BookingStackNav.Navigator>

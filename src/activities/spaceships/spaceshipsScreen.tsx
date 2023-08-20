@@ -29,6 +29,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import SliderPrevious from '../../../assets/svgData/spaceShipScreen/sliderPreviousIcon';
 import SliderNext from '../../../assets/svgData/spaceShipScreen/sliderNextIcon';
 import {useAppContext} from '../../context/AppContext';
+import {useNavigation} from '@react-navigation/native';
+import {screenNames} from '../../constants/navigationConstants/screenNames';
+import {stackNames} from '../../constants/navigationConstants/stackNames';
+
 const SpaceshipsScreen = () => {
   const carouselRef = useRef(null);
   const width = Dimensions.get('window').width;
@@ -37,6 +41,8 @@ const SpaceshipsScreen = () => {
   const [spaceShips, setSpaceShips] = React.useState([]);
   const [carouselData, setCarousalData] = React.useState([]);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  const navigation = useNavigation();
 
   const handlePrevSlide = () => {
     if (carouselRef.current) {
@@ -107,6 +113,9 @@ const SpaceshipsScreen = () => {
 
   const onPressBook = () => {
     setSpaceShip(carouselData[currentIndex]);
+    navigation.navigate(stackNames.BOOKING_STACK, {
+      screen: screenNames.SeatSelection_Screen,
+    });
   };
 
   return (
